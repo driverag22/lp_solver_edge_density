@@ -44,7 +44,7 @@ int main()
   // trivial or known constraints
   // -----------------------------------------------------------------------------------------------
 
-  int ccc = 0;
+  int ccc = -1;
 
   // constraint #0: c5 \leq 2X
   ++ccc;
