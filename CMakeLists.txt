@@ -36,7 +36,7 @@ endif()
 # Creating entries for target: lp_solver
 # ############################
 
-add_executable( lp_solver  main.cpp )
+add_executable( lp_solver  src/main.cpp )
 
 add_to_cached_list( CGAL_EXECUTABLE_TARGETS lp_solver )
 
