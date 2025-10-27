@@ -27,14 +27,15 @@ int main()
   int vvv = -1;
   const int X = ++vvv; vname.push_back("#crossings");
   const int E = ++vvv; vname.push_back("#edges");
+  // types of edges
+  const int ep = ++vvv; vname.push_back("#noncrossing_edges"); // no crossing
+  const int ex = ++vvv; vname.push_back("#crossing_edges"); // one crossing
+
   // #cells of certain type
   const int c5 = ++vvv; vname.push_back("c5");
   const int c6 = ++vvv; vname.push_back("c6");
   const int c7 = ++vvv; vname.push_back("c7");
   const int t6 = ++vvv; vname.push_back("t6");
-  // types of edges
-  const int ep = ++vvv; vname.push_back("#noncrossing_edges"); // no crossing
-  const int ex = ++vvv; vname.push_back("#crossing_edges"); // one crossing
 
   // non-crossing edges shared by cells c5, c7, t6:
   const int e_c5 = ++vvv; vname.push_back("noncrossing_edges_c5_c5");
@@ -79,7 +80,7 @@ int main()
   ///// Triangle count related to c5, c7
   // constraint #3: 3*t6 \leq c5 + 2*c7
   ++ccc;
-  cname.push_back("3T leq A + 2C");
+  cname.push_back("3t6 leq c5 + 2 c7");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(t6, ccc, 3);
   lp.set_a(c5, ccc, -1);
@@ -102,19 +103,19 @@ int main()
   lp.set_a(ex, ccc, 1);
   lp.set_a(X, ccc, -2);
 
-  // constraint #6: c5 + 2*c6 + c7 = E_{x}
+  // constraint #6: c5 + 2*c6 + c7 \leq E_{x}
   ++ccc;
-  cname.push_back("A+2B+C leq 2X");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  cname.push_back("c5+2c6+c7 leq E_{x}");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 2);
   lp.set_a(c7, ccc, 1);
   lp.set_a(ex, ccc, -1);
 
-  // constraint #7: c5 + 2*c7 + 3*t6 = 2 E_{p}
+  // constraint #7: c5 + 2*c7 + 3*t6 \leq 2 E_{p}
   ++ccc;
   cname.push_back("A + 2C + 3T leq 2 E_{p}");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c7, ccc, 2);
   lp.set_a(t6, ccc, 3);
@@ -129,10 +130,10 @@ int main()
 
 
   ///// Non-crossing edge constraints
-  // constraint #9: e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} = E_{p}
+  // constraint #9: e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} \leq E_{p}
   ++ccc;
-  cname.push_back("e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} = E_{p}");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  cname.push_back("e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} leq E_{p}");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_tc7, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);
@@ -140,39 +141,76 @@ int main()
   lp.set_a(e_c7, ccc, 1);
   lp.set_a(ep, ccc, -1);
 
-  // constraint #: e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} \leq c5
+  // constraint #10: e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} = c5
   ++ccc;
-  cname.push_back("e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} leq c5");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  cname.push_back("e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} = c5");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);
   lp.set_a(e_c5, ccc, 2);
   lp.set_a(c5, ccc, -1);
 
-  // constraint #: e_{t c7} + e_{c5 c7} + 2e_{c7 c7} \leq 2 c7
+  // constraint #11: e_{t c7} + e_{c5 c7} + 2e_{c7 c7} = 2 c7
   ++ccc;
-  cname.push_back("e_{t c7} + e_{c5 c7} + e_{c7 c7} leq 2 c7");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  cname.push_back("e_{t c7} + e_{c5 c7} + e_{c7 c7} = 2 c7");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(e_tc7, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);
   lp.set_a(e_c7, ccc, 2);
   lp.set_a(c7, ccc, -2);
 
-  // constraint #: e_{t c5} + e_{t c7} \leq 3t
+  // constraint #12: e_{t c5} + e_{t c7} = 3t
   ++ccc;
-  cname.push_back("e_{t c5} + e_{t c7} leq 3 t6");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  cname.push_back("e_{t c5} + e_{t c7} = 3 t6");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_tc7, ccc, 1);
   lp.set_a(t6, ccc, -3);
 
-  // constraint #: e_{t c5} \leq X
+  // constraint #13: e_{t c5} \leq X
   // cell c5 adjacent to a triangle cannot "share" crossing with another c5
   ++ccc;
   cname.push_back("e_{t c5} leq X");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(X, ccc, -1);
+
+  // constraint #14: c5 \leq 2X - e_{t c5} - e_{c5}
+  // each crossing can give two c5's, but:
+  //   - if a c5 is adjacent to a triangle, then only 1
+  //   - if a c5 is adjacent to another c5 on non-crossing edge, 
+  //     then only one of the two can share crossing with another c5
+  //   - if a c5 is adjacent to a c7 on non-crossing edge, 
+  //     then the c7 crossing can only have one c5
+  // So for each edge e_{t c5}, e_{c5}, e_{c7}, we get crossings with at most 1 c5
+  ++ccc;
+  cname.push_back("c5 leq 2X - e_{t c5} - e_{c5} - e_{c5 c7}");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c5, ccc, 1);
+  lp.set_a(e_tc5, ccc, 1);
+  lp.set_a(e_c5, ccc, 1);
+  lp.set_a(e_c5c7, ccc, 1);
+  lp.set_a(X, ccc, -2);
+
+  // // constraint #14: c5 \leq 2X - e_{t c5}
+  // // each crossing can have two c5's, but if a c5 is adjacent to a triangle, 
+  // // then only one
+  // ++ccc;
+  // cname.push_back("c5 leq 2X - e_{t c5}");
+  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  // lp.set_a(c5, ccc, 1);
+  // lp.set_a(e_tc5, ccc, 1);
+  // lp.set_a(X, ccc, -2);
+
+  // // constraint #15: c5 \leq 2X - e_{c5}
+  // // each crossing can have two c5's, but if a c5 is adjacent to another c5,
+  // // then the other c5 cannot share crossing with more c5s
+  // ++ccc;
+  // cname.push_back("c5 leq 2X - e_{c5}");
+  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  // lp.set_a(c5, ccc, 1);
+  // lp.set_a(e_c5, ccc, 1);
+  // lp.set_a(X, ccc, -2);
 
 
   // constraint #[-1]: normalization: X = 1
@@ -200,15 +238,18 @@ int main()
   else {
     std::cout << "Max value of 13A + 6B - C + 6T - 20X: " 
               << -s.objective_value()
-              << " (about " << -CGAL::to_double(s.objective_value()) << ")\n";
+              << " (about " << -CGAL::to_double(s.objective_value()) << ")\n\n";
 
     // variables
     std::vector<ET> val(s.variable_numerators_begin(), s.variable_numerators_end());
-    for (std::size_t i = 0; i < val.size(); ++i)
+    for (std::size_t i = 0; i < val.size(); ++i) {
       std::cout << vname[i] << " = " << val[i] << "\n";
+      if (i == 3) std::cout << "\n";
+      else if (i == 7) std::cout << "\n";
+    }
 
     // tight constraints
-    std::cout << "Tight constraints:\n";
+    std::cout << "\nTight constraints:\n";
     std::size_t c = 0;
     for (auto i = s.optimality_certificate_begin(); i != s.optimality_certificate_end(); ++i) {
       if (*i != 0) std::cout << "  " << cname[c] << "\n";
