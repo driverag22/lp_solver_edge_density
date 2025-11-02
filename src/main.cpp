@@ -16,7 +16,7 @@ typedef CGAL::Quadratic_program_solution<ET> Solution;
 
 int main()
 {
-  // create an LP with Ax <= b, lower bound 0 and no upper bounds
+  // create an LP with Ax <= b, lower bound 0 and no upper bounds on variables
   Program lp(CGAL::SMALLER, true, 0, false, 1000); 
 
   // names
@@ -94,7 +94,7 @@ int main()
 
 
   //// Edge constraints
-  // constraint #7: m = e_{x} + e_{p}
+  // constraint #4: m = e_{x} + e_{p}
   ++ccc;
   cname.push_back("m = e_{x} + e_{p}");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
@@ -102,14 +102,14 @@ int main()
   lp.set_a(ex, ccc, 1);
   lp.set_a(m, ccc, -1);
 
-  // constraint #8: e_{x} = 2 X
+  // constraint #5: e_{x} = 2 X
   ++ccc;
   cname.push_back("e_{x} = 2X");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(ex, ccc, 1);
   lp.set_a(X, ccc, -2);
 
-  // constraint #9: c5 + 2*c6 + c7 \leq 2 e_{x}
+  // constraint #6: c5 + 2*c6 + c7 \leq 2 e_{x}
   ++ccc;
   cname.push_back("c5+2c6+c7+2c8 leq 2 e_{x}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
@@ -119,7 +119,7 @@ int main()
 
   lp.set_a(ex, ccc, -2);
 
-  // constraint #10: c5 + 2*c7 + 3*t6 \leq 2 e_{p}
+  // constraint #7: c5 + 2*c7 + 3*t6 \leq 2 e_{p}
   ++ccc;
   cname.push_back("c5 + 2 c7 + 3 t6 leq 2 e_{p}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
@@ -132,7 +132,7 @@ int main()
 
 
   //// Non-crossing edge constraints
-  // constraint #12: e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} \leq e_{p}
+  // constraint #8: e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} \leq e_{p}
   ++ccc;
   cname.push_back("e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} leq e_{p}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
@@ -144,7 +144,7 @@ int main()
 
   lp.set_a(ep, ccc, -1);
 
-  // constraint #13: e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} \leq c5
+  // constraint #9: e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} \leq c5
   ++ccc;
   cname.push_back("e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} leq c5");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
@@ -154,7 +154,7 @@ int main()
 
   lp.set_a(c5, ccc, -1);
 
-  // constraint #14: e_{t c7} + e_{c5 c7} + 2e_{c7} \leq 2 c7
+  // constraint #10: e_{t c7} + e_{c5 c7} + 2e_{c7} \leq 2 c7
   ++ccc;
   cname.push_back("e_{t c7} + e_{c5 c7} + 2e_{c7} leq 2 c7");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
@@ -164,7 +164,7 @@ int main()
 
   lp.set_a(c7, ccc, -2);
 
-  // constraint #17: e_{t c5} + e_{t c7} \leq 3t
+  // constraint #11: e_{t c5} + e_{t c7} \leq 3t
   ++ccc;
   cname.push_back("e_{t c5} + e_{t c7} leq 3 t6");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
