@@ -26,8 +26,9 @@ int main()
   // variables
   int vvv = -1;
   const int n = ++vvv; vname.push_back("#num_vertices"); // lower bound
+  const int F  = ++vvv; vname.push_back("#cells");
   const int X = ++vvv; vname.push_back("#crossings");
-  const int E = ++vvv; vname.push_back("#edges");
+  const int m = ++vvv; vname.push_back("#edges");
   // types of edges
   const int ep = ++vvv; vname.push_back("#noncrossing_edges"); // no crossing
   const int ex = ++vvv; vname.push_back("#crossing_edges"); // one crossing
@@ -38,7 +39,6 @@ int main()
   const int c7 = ++vvv; vname.push_back("c7");
   const int t6 = ++vvv; vname.push_back("t6");
   const int u  = ++vvv; vname.push_back("u"); // >=8
-  const int F  = ++vvv; vname.push_back("#cells");
 
   // non-crossing edges shared by cells c5, c7, t6:
   const int e_tc5  = ++vvv; vname.push_back("noncrossing_edges_c5_t");
@@ -53,21 +53,21 @@ int main()
 
 
   //// Planarity-derived constraints
-  // constraint #0: E - X \leq 3n - 6
+  // constraint #0: m - X \leq 3n - 6
   ++ccc;
-  cname.push_back("E - X leq 3n - 6");
+  cname.push_back("m - X leq 3n - 6");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -6);
-  lp.set_a(E, ccc, 1);
+  lp.set_a(m, ccc, 1);
   lp.set_a(X, ccc, -1);
   lp.set_a(n, ccc, -3);
 
-  // constraint #1: F = (E + 2X) - (n + X) + 2
+  // constraint #1: F = (m + 2X) - (n + X) + 2
   ++ccc;
-  cname.push_back("F = E + X - n + 2");
+  cname.push_back("F = m + X - n + 2");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 2);
   lp.set_a(F, ccc, 1);
   lp.set_a(n, ccc, 1);
-  lp.set_a(E, ccc, 1);
+  lp.set_a(m, ccc, 1);
   lp.set_a(X, ccc, 1);
 
   /// Total cell counts
@@ -94,34 +94,34 @@ int main()
 
 
   //// Edge constraints
-  // constraint #7: E = E_{x} + E_{p}
+  // constraint #7: m = e_{x} + e_{p}
   ++ccc;
-  cname.push_back("E = E_{x} + E_{p}");
+  cname.push_back("m = e_{x} + e_{p}");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(ep, ccc, 1);
   lp.set_a(ex, ccc, 1);
-  lp.set_a(E, ccc, -1);
+  lp.set_a(m, ccc, -1);
 
-  // constraint #8: E_{x} = 2 X
+  // constraint #8: e_{x} = 2 X
   ++ccc;
-  cname.push_back("E_{x} = 2X");
+  cname.push_back("e_{x} = 2X");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(ex, ccc, 1);
   lp.set_a(X, ccc, -2);
 
-  // constraint #9: c5 + 2*c6 + c7 \leq E_{x}
+  // constraint #9: c5 + 2*c6 + c7 \leq 2 e_{x}
   ++ccc;
-  cname.push_back("c5+2c6+c7+2c8 leq E_{x}");
+  cname.push_back("c5+2c6+c7+2c8 leq 2 e_{x}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 2);
   lp.set_a(c7, ccc, 1);
 
-  lp.set_a(ex, ccc, -1);
+  lp.set_a(ex, ccc, -2);
 
-  // constraint #10: c5 + 2*c7 + 3*t6 \leq 2 E_{p}
+  // constraint #10: c5 + 2*c7 + 3*t6 \leq 2 e_{p}
   ++ccc;
-  cname.push_back("c5 + 2 c7 + 3 t6 leq 2 E_{p}");
+  cname.push_back("c5 + 2 c7 + 3 t6 leq 2 e_{p}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c7, ccc, 2);
@@ -132,9 +132,9 @@ int main()
 
 
   //// Non-crossing edge constraints
-  // constraint #12: e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} \leq E_{p}
+  // constraint #12: e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} \leq e_{p}
   ++ccc;
-  cname.push_back("e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} leq E_{p}");
+  cname.push_back("e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5} + e_{c7} leq e_{p}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_tc7, ccc, 1);
@@ -156,7 +156,7 @@ int main()
 
   // constraint #14: e_{t c7} + e_{c5 c7} + 2e_{c7} \leq 2 c7
   ++ccc;
-  cname.push_back("e_{t c7} + e_{c5 c7} + e_{c7 c8} + e_{c7 u} + e_{c7} leq 2 c7");
+  cname.push_back("e_{t c7} + e_{c5 c7} + 2e_{c7} leq 2 c7");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(e_tc7, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);

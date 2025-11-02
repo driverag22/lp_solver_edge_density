@@ -163,9 +163,9 @@ int main()
   lp.set_a(ex, ccc, 1);
   lp.set_a(X, ccc, -2);
 
-  // constraint #9: c5 + 2*c6 + c7 + 2 c8 + s_{x} \leq E_{x}
+  // constraint #9: c5 + 2*c6 + c7 + 2 c8 + s_{x} \leq 2 E_{x}
   ++ccc;
-  cname.push_back("c5+2c6+c7+2c8 leq E_{x}");
+  cname.push_back("c5+2c6+c7+2c8 leq 2 E_{x}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 2);
