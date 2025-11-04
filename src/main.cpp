@@ -111,6 +111,13 @@ int main()
   lp.set_a(s3, ccc, -2);
   lp.set_a(sx, ccc, -1);
 
+  ++ccc;
+  cname.push_back("2sx = 2s3 + s2");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(sx, ccc, 2);
+  lp.set_a(s2, ccc, -1);
+  lp.set_a(s3, ccc, -2);
+
 
 
   ///// Cell counts related to crossing number
@@ -133,18 +140,16 @@ int main()
   lp.set_a(X, ccc, -2);
 
   /// Triangle count related to c5, c7, c8, ...
-  // constraint #7: 3*t6 leq c5 + 2*c7 + c8 + (s_{1}+s_{2}+s_{3}-s_{x})
+  // constraint #7: 3*t6 leq c5 + 2*c7 + c8 + (s1 + s2/2)
   ++ccc;
-  cname.push_back("3t6 leq c5 + 2 c7 + c8 + (s_{1,2,3}-s_{x})");
+  cname.push_back("3t6 leq c5 + 2 c7 + c8 + (s_1 + s_2/2)");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(t6, ccc, 3);
-  lp.set_a(c5, ccc, -1);
-  lp.set_a(c7, ccc, -2);
-  lp.set_a(c8, ccc, -1);
-  lp.set_a(s1, ccc, -1);
+  lp.set_a(t6, ccc, 6);
+  lp.set_a(c5, ccc, -2);
+  lp.set_a(c7, ccc, -4);
+  lp.set_a(c8, ccc, -2);
+  lp.set_a(s1, ccc, -2);
   lp.set_a(s2, ccc, -1);
-  lp.set_a(s3, ccc, -1);
-  lp.set_a(sx, ccc, 1);
 
 
 
@@ -176,19 +181,17 @@ int main()
   lp.set_a(sx, ccc, 1);
   lp.set_a(ex, ccc, -2);
 
-  // constraint #11: c5 + 2*c7 + 3*t6 + c8 + (s_{1,2,3}-s_{x}) = 2 E_{p}
+  // constraint #11: c5 + 2*c7 + 3*t6 + c8 + (s1 + s2/2) = 2 E_{p}
   ++ccc;
-  cname.push_back("c5 + 2 c7 + 3 t6 + c8 + (s_{1,2,3}-s_{x}) = 2 E_{p}");
+  cname.push_back("c5 + 2 c7 + 3 t6 + c8 + (s1 + s2/2) = 2 E_{p}");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(c5, ccc, 1);
-  lp.set_a(c7, ccc, 2);
-  lp.set_a(t6, ccc, 3);
-  lp.set_a(c8, ccc, 1);
-  lp.set_a(s1, ccc, 1);
+  lp.set_a(c5, ccc, 2);
+  lp.set_a(c7, ccc, 4);
+  lp.set_a(t6, ccc, 6);
+  lp.set_a(c8, ccc, 2);
+  lp.set_a(s1, ccc, 2);
   lp.set_a(s2, ccc, 1);
-  lp.set_a(s3, ccc, 1);
-  lp.set_a(sx, ccc, -1);
-  lp.set_a(ep, ccc, -2);
+  lp.set_a(ep, ccc, -4);
 
   // constraint #12: 3*t6 \leq E_{p}
   // triangles cannot share edges
@@ -259,19 +262,17 @@ int main()
   lp.set_a(e_c8, ccc, 2);
   lp.set_a(c8, ccc, -1);
 
-  // constraint #17: e_{t u} + e_{c5 u} + e_{c7 u} + e_{c8 u} + 2e_{u u} = (s_{1,2,3}-s_{x})
+  // constraint #17: e_{t u} + e_{c5 u} + e_{c7 u} + e_{c8 u} + 2e_{u u} = s1 + s2/2
   ++ccc;
-  cname.push_back("e_{t u} + e_{c5 u} + e_{c7 u} + e_{c8 u} + 2e_{u u} = (s_{1,2,3}-s_{x})");
+  cname.push_back("e_{t u} + e_{c5 u} + e_{c7 u} + e_{c8 u} + 2e_{u u} = s1 + s2/2");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(e_tu, ccc, 1);
-  lp.set_a(e_c5u, ccc, 1);
-  lp.set_a(e_c7u, ccc, 1);
-  lp.set_a(e_c8u, ccc, 1);
-  lp.set_a(e_u, ccc, 2);
-  lp.set_a(s1, ccc, -1);
+  lp.set_a(e_tu, ccc, 2);
+  lp.set_a(e_c5u, ccc, 2);
+  lp.set_a(e_c7u, ccc, 2);
+  lp.set_a(e_c8u, ccc, 2);
+  lp.set_a(e_u, ccc, 4);
+  lp.set_a(s1, ccc, -2);
   lp.set_a(s2, ccc, -1);
-  lp.set_a(s3, ccc, -1);
-  lp.set_a(sx, ccc, 1);
 
   // constraint #18: e_{t c5} + e_{t c7} + e_{t c8} + e_{t u} = 3t
   ++ccc;
