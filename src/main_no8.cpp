@@ -39,7 +39,6 @@ int main()
   const int c6 = ++vvv; vname.push_back("c6");
   const int c7 = ++vvv; vname.push_back("c7");
   const int t6 = ++vvv; vname.push_back("t6");
-  const int c8 = ++vvv; vname.push_back("c8");
   const int u  = ++vvv; vname.push_back("u"); // >=8
   const int F  = ++vvv; vname.push_back("#cells");
 
@@ -52,22 +51,122 @@ int main()
   // non-crossing edges shared by cells c5, c7, t6:
   const int e_tc5  = ++vvv; vname.push_back("noncrossing_edges_c5_t");
   const int e_tc7  = ++vvv; vname.push_back("noncrossing_edges_c7_t");
-  const int e_tc8  = ++vvv; vname.push_back("noncrossing_edges_c8_t");
   const int e_tu   = ++vvv; vname.push_back("noncrossing_edges_u_t");
   
   const int e_c5   = ++vvv; vname.push_back("noncrossing_edges_c5_c5");
   const int e_c7   = ++vvv; vname.push_back("noncrossing_edges_c7_c7");
-  const int e_c8   = ++vvv; vname.push_back("noncrossing_edges_c8_c8");
   const int e_u    = ++vvv; vname.push_back("noncrossing_edges_u_u");
 
   const int e_c5c7 = ++vvv; vname.push_back("noncrossing_edges_c5_c7");
-  const int e_c5c8 = ++vvv; vname.push_back("noncrossing_edges_c5_c8");
   const int e_c5u  = ++vvv; vname.push_back("noncrossing_edges_c5_u");
-  const int e_c7c8 = ++vvv; vname.push_back("noncrossing_edges_c7_c8");
   const int e_c7u  = ++vvv; vname.push_back("noncrossing_edges_c7_u");
-  const int e_c8u  = ++vvv; vname.push_back("noncrossing_edges_c8_u");
+
+  // wedges including 5 cells
+  const int w_5566  = ++vvv; vname.push_back("wedge 5566");
+  const int w_55u6  = ++vvv; vname.push_back("wedge 5566");
+  const int w_556u  = ++vvv; vname.push_back("wedge 5566");
+  const int w_55uu  = ++vvv; vname.push_back("wedge 5566");
+  const int w_5666  = ++vvv; vname.push_back("wedge 5666");
+  const int w_566u  = ++vvv; vname.push_back("wedge 566u");
+  const int w_56u6  = ++vvv; vname.push_back("wedge 56u6");
+  const int w_56uu  = ++vvv; vname.push_back("wedge 56uu");
+  const int w_5u66  = ++vvv; vname.push_back("wedge 5u66");
+  const int w_5u6u  = ++vvv; vname.push_back("wedge 5u6u");
+  const int w_5uu6  = ++vvv; vname.push_back("wedge 5uu6");
+  const int w_5uuu  = ++vvv; vname.push_back("wedge 5uuu");
+  const int w_5676  = ++vvv; vname.push_back("wedge 5676");
+  const int w_567u  = ++vvv; vname.push_back("wedge 567u");
+  const int w_5u76  = ++vvv; vname.push_back("wedge 5u76");
+  const int w_5u7u  = ++vvv; vname.push_back("wedge 5u7u");
 
   int ccc = -1;
+
+  ++ccc;
+  cname.push_back("w_5566 + ... leq X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_5566, ccc, 1);
+  lp.set_a(w_55u6, ccc, 1);
+  lp.set_a(w_556u, ccc, 1);
+  lp.set_a(w_55uu, ccc, 1);
+  lp.set_a(w_5666, ccc, 1);
+  lp.set_a(w_566u, ccc, 1);
+  lp.set_a(w_56u6, ccc, 1);
+  lp.set_a(w_56uu, ccc, 1);
+  lp.set_a(w_5u66, ccc, 1);
+  lp.set_a(w_5u6u, ccc, 1);
+  lp.set_a(w_5uu6, ccc, 1);
+  lp.set_a(w_5uuu, ccc, 1);
+  lp.set_a(w_5676, ccc, 1);
+  lp.set_a(w_567u, ccc, 1);
+  lp.set_a(w_5u76, ccc, 1);
+  lp.set_a(w_5u7u, ccc, 1);
+  lp.set_a(X, ccc, -1);
+
+  ++ccc;
+  cname.push_back("2w_5566 + ... = c5");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_5566, ccc, 2);
+  lp.set_a(w_55u6, ccc, 2);
+  lp.set_a(w_556u, ccc, 2);
+  lp.set_a(w_55uu, ccc, 2);
+  lp.set_a(w_5666, ccc, 1);
+  lp.set_a(w_566u, ccc, 1);
+  lp.set_a(w_56u6, ccc, 1);
+  lp.set_a(w_56uu, ccc, 1);
+  lp.set_a(w_5u66, ccc, 1);
+  lp.set_a(w_5u6u, ccc, 1);
+  lp.set_a(w_5uu6, ccc, 1);
+  lp.set_a(w_5uuu, ccc, 1);
+  lp.set_a(w_5676, ccc, 1);
+  lp.set_a(w_567u, ccc, 1);
+  lp.set_a(w_5u76, ccc, 1);
+  lp.set_a(w_5u7u, ccc, 1);
+  lp.set_a(c5, ccc, -1);
+
+  ++ccc;
+  cname.push_back("2w_5566 + ... leq c6");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_5566, ccc, 2);
+  lp.set_a(w_55u6, ccc, 1);
+  lp.set_a(w_556u, ccc, 1);
+  lp.set_a(w_5666, ccc, 3);
+  lp.set_a(w_566u, ccc, 2);
+  lp.set_a(w_56u6, ccc, 2);
+  lp.set_a(w_56uu, ccc, 1);
+  lp.set_a(w_5u66, ccc, 2);
+  lp.set_a(w_5u6u, ccc, 1);
+  lp.set_a(w_5uu6, ccc, 1);
+  lp.set_a(w_5676, ccc, 2);
+  lp.set_a(w_567u, ccc, 1);
+  lp.set_a(w_5u76, ccc, 1);
+  lp.set_a(c6, ccc, -1);
+
+  ++ccc;
+  cname.push_back("w_5676 + ... leq c7");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_5676, ccc, 1);
+  lp.set_a(w_567u, ccc, 1);
+  lp.set_a(w_5u76, ccc, 1);
+  lp.set_a(w_5u7u, ccc, 1);
+  lp.set_a(c7, ccc, -1);
+
+  ++ccc;
+  cname.push_back("w_55u6 + ... leq sx");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_55u6, ccc, 1);
+  lp.set_a(w_556u, ccc, 1);
+  lp.set_a(w_55uu, ccc, 2);
+  lp.set_a(w_566u, ccc, 1);
+  lp.set_a(w_56u6, ccc, 1);
+  lp.set_a(w_56uu, ccc, 2);
+  lp.set_a(w_5u66, ccc, 1);
+  lp.set_a(w_5u6u, ccc, 2);
+  lp.set_a(w_5uu6, ccc, 2);
+  lp.set_a(w_5uuu, ccc, 3);
+  lp.set_a(w_567u, ccc, 1);
+  lp.set_a(w_5u76, ccc, 1);
+  lp.set_a(w_5u7u, ccc, 2);
+  lp.set_a(sx, ccc, -1);
 
   //// Planarity-derived constraints
   // edge density C_{4}-free planar
@@ -96,7 +195,7 @@ int main()
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 1);
   lp.set_a(c7, ccc, 1);
-  lp.set_a(c8, ccc, 1);
+  // lp.set_a(c8, ccc, 1);
   lp.set_a(t6, ccc, 1);
   lp.set_a(u, ccc, 1);
   lp.set_a(F, ccc, -1);
@@ -121,7 +220,7 @@ int main()
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 2);
   lp.set_a(c7, ccc, 1);
-  lp.set_a(c8, ccc, 2);
+  // lp.set_a(c8, ccc, 2);
   lp.set_a(sx, ccc, 1);
   lp.set_a(X, ccc, -4);
 
@@ -140,7 +239,7 @@ int main()
   lp.set_a(t6, ccc, 3);
   lp.set_a(c5, ccc, -1);
   lp.set_a(c7, ccc, -2);
-  lp.set_a(c8, ccc, -1);
+  // lp.set_a(c8, ccc, -1);
   lp.set_a(s1, ccc, -1);
   lp.set_a(s2, ccc, -1);
   lp.set_a(s3, ccc, -1);
@@ -172,7 +271,7 @@ int main()
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 2);
   lp.set_a(c7, ccc, 1);
-  lp.set_a(c8, ccc, 2);
+  // lp.set_a(c8, ccc, 2);
   lp.set_a(sx, ccc, 1);
   lp.set_a(ex, ccc, -2);
 
@@ -183,7 +282,7 @@ int main()
   lp.set_a(c5, ccc, 1);
   lp.set_a(c7, ccc, 2);
   lp.set_a(t6, ccc, 3);
-  lp.set_a(c8, ccc, 1);
+  // lp.set_a(c8, ccc, 1);
   lp.set_a(s1, ccc, 1);
   lp.set_a(s2, ccc, 1);
   lp.set_a(s3, ccc, 1);
@@ -209,19 +308,19 @@ int main()
   // triangle
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_tc7, ccc, 1);
-  lp.set_a(e_tc8, ccc, 1);
+  // lp.set_a(e_tc8, ccc, 1);
   lp.set_a(e_tu, ccc, 1);
   // mixed
   lp.set_a(e_c5c7, ccc, 1);
-  lp.set_a(e_c5c8, ccc, 1);
+  // lp.set_a(e_c5c8, ccc, 1);
   lp.set_a(e_c5u, ccc, 1);
-  lp.set_a(e_c7c8, ccc, 1);
+  // lp.set_a(e_c7c8, ccc, 1);
   lp.set_a(e_c7u, ccc, 1);
-  lp.set_a(e_c8u, ccc, 1);
+  // lp.set_a(e_c8u, ccc, 1);
   // cell to itself
   lp.set_a(e_c5, ccc, 1);
   lp.set_a(e_c7, ccc, 1);
-  lp.set_a(e_c8, ccc, 1);
+  // lp.set_a(e_c8, ccc, 1);
   lp.set_a(e_u, ccc, 1);
 
   lp.set_a(ep, ccc, -1);
@@ -232,7 +331,7 @@ int main()
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);
-  lp.set_a(e_c5c8, ccc, 1);
+  // lp.set_a(e_c5c8, ccc, 1);
   lp.set_a(e_c5u, ccc, 1);
   lp.set_a(e_c5, ccc, 2);
   lp.set_a(c5, ccc, -1);
@@ -243,21 +342,21 @@ int main()
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tc7, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);
-  lp.set_a(e_c7c8, ccc, 1);
+  // lp.set_a(e_c7c8, ccc, 1);
   lp.set_a(e_c7u, ccc, 1);
   lp.set_a(e_c7, ccc, 2);
   lp.set_a(c7, ccc, -2);
 
   // constraint #16: e_{t c8} + e_{c5 c8} + e_{c7 c8} + e_{c8 u} + 2e_{c8 c8} = c8
-  ++ccc;
-  cname.push_back("e_{t c8} + e_{c5 c8} + e_{c7 c8} + e_{c8 u} + 2e_{c8 c8} = c8");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(e_tc8, ccc, 1);
-  lp.set_a(e_c5c8, ccc, 1);
-  lp.set_a(e_c7c8, ccc, 1);
-  lp.set_a(e_c8u, ccc, 1);
-  lp.set_a(e_c8, ccc, 2);
-  lp.set_a(c8, ccc, -1);
+  // ++ccc;
+  // cname.push_back("e_{t c8} + e_{c5 c8} + e_{c7 c8} + e_{c8 u} + 2e_{c8 c8} = c8");
+  // lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  // lp.set_a(e_tc8, ccc, 1);
+  // lp.set_a(e_c5c8, ccc, 1);
+  // lp.set_a(e_c7c8, ccc, 1);
+  // lp.set_a(e_c8u, ccc, 1);
+  // lp.set_a(e_c8, ccc, 2);
+  // lp.set_a(c8, ccc, -1);
 
   // constraint #17: e_{t u} + e_{c5 u} + e_{c7 u} + e_{c8 u} + 2e_{u u} = (s_{1,2,3}-s_{x})
   ++ccc;
@@ -266,7 +365,7 @@ int main()
   lp.set_a(e_tu, ccc, 1);
   lp.set_a(e_c5u, ccc, 1);
   lp.set_a(e_c7u, ccc, 1);
-  lp.set_a(e_c8u, ccc, 1);
+  // lp.set_a(e_c8u, ccc, 1);
   lp.set_a(e_u, ccc, 2);
   lp.set_a(s1, ccc, -1);
   lp.set_a(s2, ccc, -1);
@@ -279,7 +378,7 @@ int main()
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_tc7, ccc, 1);
-  lp.set_a(e_tc8, ccc, 1);
+  // lp.set_a(e_tc8, ccc, 1);
   lp.set_a(e_tu, ccc, 1);
   lp.set_a(t6, ccc, -3);
 
@@ -318,8 +417,8 @@ int main()
   lp.set_a(c6, ccc, -6);
   lp.set_a(t6, ccc, -6);
   lp.set_a(c7, ccc, 1);
-  lp.set_a(c8, ccc, 8);
-  lp.set_a(u, ccc, 15);
+  // lp.set_a(c8, ccc, 8);
+  lp.set_a(u, ccc, 8);
   lp.set_a(X, ccc, 20);
 
   // objective function: set to minimize -13 c5 - 6 c6 - 6 t6 + c7 + 8 c8  + 15u + 20X 
@@ -328,8 +427,8 @@ int main()
   lp.set_c(c6, -6);
   lp.set_c(t6, -6);
   lp.set_c(c7, 1);
-  lp.set_c(c8, 8);
-  lp.set_c(u, 15);
+  // lp.set_c(c8, 8);
+  lp.set_c(u, 8);
   lp.set_c(X, 20);
 
   // solve the program, using ET as the exact type
@@ -343,13 +442,14 @@ int main()
     int j = 0;
     for (auto xit = s.variable_values_begin(); xit != s.variable_values_end(); ++xit, ++j) {
       std::cout << "[" << vname[j] << "] = " << *xit << "\n";
-      if (j == 4 || j == 11 || j == 15) std::cout << "\n";
+      if (j == 4 || j == 10 || j == 14 || j == 23) std::cout << "\n";
     }
+
     std::cout << "\n\n\n\ndirection:\n\n";
     auto it = s.unboundedness_certificate_begin(); int i = 0;
     for (; it != s.unboundedness_certificate_end(); ++it, ++i) {
       std::cout << "w[" << vname[i] << "] = " << *it << "\n";
-      if (i == 4 || i == 11 || i == 15) std::cout << "\n";
+      if (i == 4 || i == 10 || i == 14 || i == 23) std::cout << "\n";
     }
   }
   else if (s.is_infeasible()) std::cout << "infeasible" << std::endl;
