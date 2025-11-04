@@ -166,9 +166,10 @@ int main()
   lp.set_a(ex, ccc, 1);
   lp.set_a(X, ccc, -2);
 
-  // constraint #10: c5 + 2*c6 + c7 + 2 c8 + 2 s_{x} = 2 E_{x}
+  // constraint #10: c5 + 2*c6 + c7 + 2 c8 + s_{x} = 2 E_{x}
+  //  [covered by constraints #5 and #9]
   ++ccc;
-  cname.push_back("c5+2c6+c7+2c8+2sx = 2 E_{x}");
+  cname.push_back("c5 + 2c6 + c7 + 2c8 + sx = 2 E_{x}");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 2);
@@ -192,6 +193,7 @@ int main()
   lp.set_a(ep, ccc, -2);
 
   // constraint #12: 3*t6 \leq E_{p}
+  // triangles cannot share edges
   ++ccc;
   cname.push_back("3T leq E_{p}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
