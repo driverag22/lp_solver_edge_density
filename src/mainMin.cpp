@@ -49,18 +49,171 @@ int main()
   const int e_c5c7 = ++vvv; vname.push_back("noncrossing_edges_c5_c7");
 
   // wedges including 5 cells
-  const int w_5566  = ++vvv; vname.push_back("wedge 5566");
-  const int w_5666  = ++vvv; vname.push_back("wedge 5666");
-  const int w_5676  = ++vvv; vname.push_back("wedge 5676");
+  const int w_5566 = ++vvv; vname.push_back("wedge 5566"); // a
+  const int w_5676 = ++vvv; vname.push_back("wedge 5676"); // b
+  const int w_5666 = ++vvv; vname.push_back("wedge 5666"); // c
+  // other wedges
+  const int w_6666 = ++vvv; vname.push_back("wedge 6666"); // d
+  const int w_6667 = ++vvv; vname.push_back("wedge 6667"); // e 
+  const int w_6677 = ++vvv; vname.push_back("wedge 6677"); // f
+  const int w_6777 = ++vvv; vname.push_back("wedge 6777"); // g 
+  const int w_7777 = ++vvv; vname.push_back("wedge 7777");
+
+  // wedges counting for each c6
+  const int w_ac = ++vvv; vname.push_back("wedge 5566 to 5666");
+  const int w_ad = ++vvv; vname.push_back("wedge 5566 to 6666");
+  const int w_ae = ++vvv; vname.push_back("wedge 5566 to 6667");
+  const int w_af = ++vvv; vname.push_back("wedge 5566 to 6677");
+  const int w_ag = ++vvv; vname.push_back("wedge 5566 to 6777");
+  const int w_bc = ++vvv; vname.push_back("wedge 5676 to 5666");
+  const int w_bd = ++vvv; vname.push_back("wedge 5676 to 6666");
+  const int w_be = ++vvv; vname.push_back("wedge 5676 to 6667");
+  const int w_bf = ++vvv; vname.push_back("wedge 5676 to 6677");
+  const int w_bg = ++vvv; vname.push_back("wedge 5676 to 6777");
+  const int w_cc = ++vvv; vname.push_back("wedge 5666 to 5666");
+  const int w_cd = ++vvv; vname.push_back("wedge 5666 to 6666");
+  const int w_ce = ++vvv; vname.push_back("wedge 5666 to 6667");
+  const int w_cf = ++vvv; vname.push_back("wedge 5666 to 6677");
+  const int w_cg = ++vvv; vname.push_back("wedge 5666 to 6777");
+  const int w_dd = ++vvv; vname.push_back("wedge 6666 to 6666");
+  const int w_de = ++vvv; vname.push_back("wedge 6666 to 6667");
+  const int w_df = ++vvv; vname.push_back("wedge 6666 to 6677");
+  const int w_dg = ++vvv; vname.push_back("wedge 6666 to 6777");
+  const int w_ee = ++vvv; vname.push_back("wedge 6667 to 6667");
+  const int w_ef = ++vvv; vname.push_back("wedge 6667 to 6677");
+  const int w_eg = ++vvv; vname.push_back("wedge 6667 to 6777");
+  const int w_ff = ++vvv; vname.push_back("wedge 6677 to 6677");
+  const int w_fg = ++vvv; vname.push_back("wedge 6677 to 6777");
+  const int w_gg = ++vvv; vname.push_back("wedge 6777 to 6777");
 
   int ccc = -1;
 
+  // one c6-type per c6 cell
   ++ccc;
-  cname.push_back("w_5566 + ... leq X");
+  cname.push_back("w_ac + ... = c6");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_ac, ccc, 1);
+  lp.set_a(w_ad, ccc, 1);
+  lp.set_a(w_ae, ccc, 1);
+  lp.set_a(w_af, ccc, 1);
+  lp.set_a(w_ag, ccc, 1);
+  lp.set_a(w_bc, ccc, 1);
+  lp.set_a(w_bd, ccc, 1);
+  lp.set_a(w_be, ccc, 1);
+  lp.set_a(w_bf, ccc, 1);
+  lp.set_a(w_bg, ccc, 1);
+  lp.set_a(w_cc, ccc, 1);
+  lp.set_a(w_cd, ccc, 1);
+  lp.set_a(w_ce, ccc, 1);
+  lp.set_a(w_cf, ccc, 1);
+  lp.set_a(w_cg, ccc, 1);
+  lp.set_a(w_dd, ccc, 1);
+  lp.set_a(w_de, ccc, 1);
+  lp.set_a(w_df, ccc, 1);
+  lp.set_a(w_dg, ccc, 1);
+  lp.set_a(w_ee, ccc, 1);
+  lp.set_a(w_ef, ccc, 1);
+  lp.set_a(w_eg, ccc, 1);
+  lp.set_a(w_ff, ccc, 1);
+  lp.set_a(w_fg, ccc, 1);
+  lp.set_a(w_gg, ccc, 1);
+  lp.set_a(c6, ccc, -1);
+
+  //// per wedge c6 constraints
+  /// w_5566 = b
+  ++ccc;
+  cname.push_back("2 w_5566 = 2a = sum_i w_ai");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_ac, ccc, 1);
+  lp.set_a(w_ad, ccc, 1);
+  lp.set_a(w_ae, ccc, 1);
+  lp.set_a(w_af, ccc, 1);
+  lp.set_a(w_ag, ccc, 1);
+  lp.set_a(w_5566, ccc, -2);
+  /// w_5676 = b
+  ++ccc;
+  cname.push_back("2b = sum_i w_bi");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_bc, ccc, 1);
+  lp.set_a(w_bd, ccc, 1);
+  lp.set_a(w_be, ccc, 1);
+  lp.set_a(w_bf, ccc, 1);
+  lp.set_a(w_bg, ccc, 1);
+  lp.set_a(w_5676, ccc, -2);
+  /// w_5566 = c
+  ++ccc;
+  cname.push_back("3c = sum_i w_ci");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_ac, ccc, 1);
+  lp.set_a(w_bc, ccc, 1);
+  lp.set_a(w_cc, ccc, 1);
+  lp.set_a(w_cd, ccc, 1);
+  lp.set_a(w_ce, ccc, 1);
+  lp.set_a(w_cf, ccc, 1);
+  lp.set_a(w_cg, ccc, 1);
+  lp.set_a(w_5676, ccc, -3);
+  // each c wedge can only combine with one a or b wedge
+  cname.push_back("w_ac + w_bc leq w_5666 = c");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_ac, ccc, 1);
+  lp.set_a(w_bc, ccc, 1);
+  lp.set_a(w_5676, ccc, -1);
+  /// w_6666 = d
+  ++ccc;
+  cname.push_back("4d = sum_i w_di");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_ad, ccc, 1);
+  lp.set_a(w_bd, ccc, 1);
+  lp.set_a(w_cd, ccc, 1);
+  lp.set_a(w_de, ccc, 1);
+  lp.set_a(w_df, ccc, 1);
+  lp.set_a(w_dg, ccc, 1);
+  lp.set_a(w_6666, ccc, -4);
+  /// w_6667 = e
+  ++ccc;
+  cname.push_back("3e = sum_i w_ei");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_ae, ccc, 1);
+  lp.set_a(w_be, ccc, 1);
+  lp.set_a(w_ce, ccc, 1);
+  lp.set_a(w_de, ccc, 1);
+  lp.set_a(w_ef, ccc, 1);
+  lp.set_a(w_eg, ccc, 1);
+  lp.set_a(w_6667, ccc, -3);
+  /// w_6677 = f
+  ++ccc;
+  cname.push_back("2f = sum_i w_fi");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_af, ccc, 1);
+  lp.set_a(w_bf, ccc, 1);
+  lp.set_a(w_cf, ccc, 1);
+  lp.set_a(w_df, ccc, 1);
+  lp.set_a(w_ef, ccc, 1);
+  lp.set_a(w_fg, ccc, 1);
+  lp.set_a(w_6677, ccc, -2);
+  /// w_6777 = g
+  ++ccc;
+  cname.push_back("g = sum_i w_gi");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_ag, ccc, 1);
+  lp.set_a(w_bg, ccc, 1);
+  lp.set_a(w_cg, ccc, 1);
+  lp.set_a(w_dg, ccc, 1);
+  lp.set_a(w_eg, ccc, 1);
+  lp.set_a(w_fg, ccc, 1);
+  lp.set_a(w_6677, ccc, -1);
+
+  ++ccc;
+  cname.push_back("w_5566 + ... = X");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(w_5566, ccc, 1);
   lp.set_a(w_5666, ccc, 1);
   lp.set_a(w_5676, ccc, 1);
+  lp.set_a(w_6666, ccc, 1);
+  lp.set_a(w_6667, ccc, 1);
+  lp.set_a(w_6677, ccc, 1);
+  lp.set_a(w_6777, ccc, 1);
+  lp.set_a(w_7777, ccc, 1);
   lp.set_a(X, ccc, -1);
 
   ++ccc;
@@ -72,17 +225,25 @@ int main()
   lp.set_a(c5, ccc, -1);
 
   ++ccc;
-  cname.push_back("2w_5566 + ... leq c6");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  cname.push_back("2w_5566 + ... = c6");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(w_5566, ccc, 2);
   lp.set_a(w_5666, ccc, 3);
   lp.set_a(w_5676, ccc, 2);
-  lp.set_a(c6, ccc, -1);
+  lp.set_a(w_6666, ccc, 4);
+  lp.set_a(w_6667, ccc, 3);
+  lp.set_a(w_6677, ccc, 2);
+  lp.set_a(w_6777, ccc, 1);
+  lp.set_a(c6, ccc, -2);
 
   ++ccc;
-  cname.push_back("w_5676 + ... leq c7");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  cname.push_back("w_5676 + ... = c7");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(w_5676, ccc, 1);
+  lp.set_a(w_6667, ccc, 1);
+  lp.set_a(w_6677, ccc, 2);
+  lp.set_a(w_6777, ccc, 3);
+  lp.set_a(w_7777, ccc, 4);
   lp.set_a(c7, ccc, -1);
 
 
@@ -229,13 +390,14 @@ int main()
   lp.set_a(X, ccc, -2);
 
   // if we have 5566 wedge, we cannot have those c5's adjacent to triangle
+  // if we have 5566 wedge, cannot be adjacent to another 5566 wedge
   ++ccc;
-  cname.push_back("2 w5566 + e_tc5 leq c5");
+  cname.push_back("2 w5566 + e_tc5 + e_c5 leq c5");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(w_5566, ccc, 2);
   lp.set_a(e_tc5, ccc, 1);
+  lp.set_a(e_c5, ccc, 1);
   lp.set_a(c5, ccc, -1);
-
 
   // objective function: set to minimize -13 c5 - 6 c6 - 6 t6 + c7 + 20X 
   //                        <=> maximize 13 c5 + 6 c6 + 6 t6 - c7 - 20X 
@@ -292,3 +454,4 @@ int main()
   }
 
 }
+
