@@ -133,17 +133,17 @@ int main()
 
   /// Triangle count related to c5, c7, c8
   // constraint #5: 3*t6 = c5 + 2*c7 + c8 + (s_{1}+s_{2}+s_{3}-s_{x})
-  // ++ccc;
-  // cname.push_back("3t6 = c5 + 2 c7 + c8 + (s_{1,2,3}-s_{x})");
-  // lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  // lp.set_a(t6, ccc, 3);
-  // lp.set_a(c5, ccc, -1);
-  // lp.set_a(c7, ccc, -2);
-  // lp.set_a(c8, ccc, -1);
-  // lp.set_a(s1, ccc, -1);
-  // lp.set_a(s2, ccc, -1);
-  // lp.set_a(s3, ccc, -1);
-  // lp.set_a(sx, ccc, 1);
+  ++ccc;
+  cname.push_back("3t6 = c5 + 2 c7 + c8 + (s_{1,2,3}-s_{x})");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(t6, ccc, 3);
+  lp.set_a(c5, ccc, -1);
+  lp.set_a(c7, ccc, -2);
+  lp.set_a(c8, ccc, -1);
+  lp.set_a(s1, ccc, -1);
+  lp.set_a(s2, ccc, -1);
+  lp.set_a(s3, ccc, -1);
+  lp.set_a(sx, ccc, 1);
 
 
 
@@ -305,24 +305,36 @@ int main()
   lp.set_a(e_c5c7, ccc, 1);
   lp.set_a(X, ccc, -2);
 
-
-
+  // constraint #21: edge density formula
+  ++ccc;
+  cname.push_back("E leq 2.4(n-2) + ...");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -96);
+  lp.set_a(E, ccc, 20);
+  lp.set_a(n, ccc, -48);
+  lp.set_a(c5, ccc, -13);
+  lp.set_a(c6, ccc, -6);
+  lp.set_a(t6, ccc, -6);
+  lp.set_a(c7, ccc, 1);
+  lp.set_a(c8, ccc, 8);
+  lp.set_a(u, ccc, 15);
+  lp.set_a(X, ccc, 20);
 
   // constraint #[-1]: normalization: X = 1
   ++ccc;
-  cname.push_back("Normalize: X = 1");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 1);
-  lp.set_a(X, ccc, 1);
+  cname.push_back("Normalize: n = 1");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 3);
+  lp.set_a(n, ccc, 1);
 
   // objective function: set to minimize -13 c5 - 6 c6 - 6 t6 + c7 + 8 c8  + 15u + 20X 
   //                        <=> maximize 13 c5 + 6 c6 + 6 t6 - c7 - 8 c8 - 15u - 20X 
-  lp.set_c(c5, -13);
-  lp.set_c(c6, -6);
-  lp.set_c(t6, -6);
-  lp.set_c(c7, 1);
-  lp.set_c(c8, 8);
-  lp.set_c(u, 15);
-  lp.set_c(X, 20);
+  // lp.set_c(c5, -13);
+  // lp.set_c(c6, -6);
+  // lp.set_c(t6, -6);
+  // lp.set_c(c7, 1);
+  // lp.set_c(c8, 8);
+  // lp.set_c(u, 15);
+  // lp.set_c(X, 20);
+  lp.set_c(E, -1);
 
   // solve the program, using ET as the exact type
   Solution s = CGAL::solve_linear_program(lp, ET());
@@ -330,11 +342,24 @@ int main()
 
   // output solution
   if (s.is_unbounded()) std::cout << "unbounded" << std::endl;
-  else if (s.is_infeasible()) std::cout << "infeasible" << std::endl;
+  else if (s.is_infeasible()) {
+    std::cout << "infeasible\n";
+
+    std::cout << "Constraints used in infeasibility certificate:\n";
+    std::size_t c = 0;
+    for (auto it = s.infeasibility_certificate_begin();
+    it != s.infeasibility_certificate_end(); ++it, ++c)
+    {
+      if (*it != 0) {
+        std::cout << "  lambda[" << c << "] = " << *it
+          << "  ->  " << cname[c] << "\n";
+      }
+    }
+  }  
   else if (!s.is_optimal()) std::cout << "no optimal solustion" << std::endl;
   else {
-    std::cout << "Max value of 13c5 + 6c6 + 6t6 - c7 - 8c8  - 15u - 20X: " 
-              << -s.objective_value()
+    std::cout << "|E| leq " 
+              << -s.objective_value() << "n"
               << " (about " << -CGAL::to_double(s.objective_value()) << ")\n\n";
 
     // variables

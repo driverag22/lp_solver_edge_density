@@ -136,7 +136,7 @@ int main()
   lp.set_a(c6, ccc, -1);
 
   //// per wedge c6 constraints
-  /// w_5566 = b
+  /// w_5566 = a
   ++ccc;
   cname.push_back("2 w_5566 = 2a = sum_i w_ai");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
@@ -156,24 +156,24 @@ int main()
   lp.set_a(w_bf, ccc, 1);
   lp.set_a(w_bg, ccc, 1);
   lp.set_a(w_5676, ccc, -2);
-  /// w_5566 = c
+  /// w_5666 = c
   ++ccc;
   cname.push_back("3c = sum_i w_ci");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(w_ac, ccc, 1);
   lp.set_a(w_bc, ccc, 1);
-  lp.set_a(w_cc, ccc, 1);
+  lp.set_a(w_cc, ccc, 2);
   lp.set_a(w_cd, ccc, 1);
   lp.set_a(w_ce, ccc, 1);
   lp.set_a(w_cf, ccc, 1);
   lp.set_a(w_cg, ccc, 1);
-  lp.set_a(w_5676, ccc, -3);
+  lp.set_a(w_5666, ccc, -3);
   // each c wedge can only combine with one a or b wedge
   cname.push_back("w_ac + w_bc leq w_5666 = c");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(w_ac, ccc, 1);
   lp.set_a(w_bc, ccc, 1);
-  lp.set_a(w_5676, ccc, -1);
+  lp.set_a(w_5666, ccc, -1);
   /// w_6666 = d
   ++ccc;
   cname.push_back("4d = sum_i w_di");
@@ -181,6 +181,7 @@ int main()
   lp.set_a(w_ad, ccc, 1);
   lp.set_a(w_bd, ccc, 1);
   lp.set_a(w_cd, ccc, 1);
+  lp.set_a(w_dd, ccc, 2);
   lp.set_a(w_de, ccc, 1);
   lp.set_a(w_df, ccc, 1);
   lp.set_a(w_dg, ccc, 1);
@@ -193,6 +194,7 @@ int main()
   lp.set_a(w_be, ccc, 1);
   lp.set_a(w_ce, ccc, 1);
   lp.set_a(w_de, ccc, 1);
+  lp.set_a(w_ee, ccc, 2);
   lp.set_a(w_ef, ccc, 1);
   lp.set_a(w_eg, ccc, 1);
   lp.set_a(w_6667, ccc, -3);
@@ -205,6 +207,7 @@ int main()
   lp.set_a(w_cf, ccc, 1);
   lp.set_a(w_df, ccc, 1);
   lp.set_a(w_ef, ccc, 1);
+  lp.set_a(w_ff, ccc, 2);
   lp.set_a(w_fg, ccc, 1);
   lp.set_a(w_6677, ccc, -2);
   /// w_6777 = g
@@ -217,7 +220,8 @@ int main()
   lp.set_a(w_dg, ccc, 1);
   lp.set_a(w_eg, ccc, 1);
   lp.set_a(w_fg, ccc, 1);
-  lp.set_a(w_6677, ccc, -1);
+  lp.set_a(w_gg, ccc, 2);
+  lp.set_a(w_6777, ccc, -1);
 
   ++ccc;
   cname.push_back("w_5566 + ... = X");
@@ -285,7 +289,7 @@ int main()
   // constraint #2: c5 + c6 + c7 + t6 = F
   ++ccc;
   cname.push_back("c5 + c6 + c7 + t6 = F");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 1);
   lp.set_a(c7, ccc, 1);
@@ -326,13 +330,6 @@ int main()
   lp.set_a(c6, ccc, 2);
   lp.set_a(c7, ccc, 1);
   lp.set_a(X, ccc, -4);
-  ++ccc;
-  cname.push_back("c5 + 2c6 + c7 = 2e_{x}");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(c5, ccc, 1);
-  lp.set_a(c6, ccc, 2);
-  lp.set_a(c7, ccc, 1);
-  lp.set_a(ex, ccc, -2);
 
   // constraint #7: c5 + 2*c7 + 3*t6 \leq 2 e_{p}
   ++ccc;
@@ -426,15 +423,15 @@ int main()
   lp.set_a(t6, ccc, -6);
   lp.set_a(c7, ccc, 1);
   lp.set_a(X, ccc, 20);
+
+  // constraint #: normalize (n-2)=1
+  ++ccc;
+  cname.push_back("n-2=1");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 3);
+  lp.set_a(n, ccc, 1);
   
-  // objective function: set to minimize -13 c5 - 6 c6 - 6 t6 + c7 + 20X 
-  //                        <=> maximize 13 c5 + 6 c6 + 6 t6 - c7 - 20X 
-  // lp.set_c(c5, -13);
-  // lp.set_c(c6, -6);
-  // lp.set_c(t6, -6);
-  // lp.set_c(c7, 1);
-  // lp.set_c(X, 20);
-  // lp.set_c(n, 1);
+  // objective function: set to minimize -E
+  //                        <=> maximize E
   lp.set_c(E, -1);
 
   // solve the program, using ET as the exact type
@@ -460,17 +457,16 @@ int main()
   else if (s.is_infeasible()) std::cout << "infeasible" << std::endl;
   else if (!s.is_optimal()) std::cout << "no optimal solustion" << std::endl;
   else {
-    std::cout << "Max value of 13c5 + 6c6 + 6t6 - c7 - 8c8  - 15u - 20X: " 
-              << -s.objective_value()
+    // std::cout << "Max value of 13c5 + 6c6 + 6t6 - c7 - 8c8  - 15u - 20X: " 
+    std::cout << "|E| leq " 
+              << -s.objective_value() << "n"
               << " (about " << -CGAL::to_double(s.objective_value()) << ")\n\n";
 
     // variables
     std::vector<ET> val(s.variable_numerators_begin(), s.variable_numerators_end());
     for (std::size_t i = 0; i < val.size(); ++i) {
       std::cout << vname[i] << " = " << val[i] << "\n";
-      if (i == 4) std::cout << "\n";
-      else if (i == 11) std::cout << "\n";
-      else if (i == 15) std::cout << "\n";
+      if (i == 5 || i == 9 || i == 14 || i == 22) std::cout << "\n";
     }
 
     // tight constraints

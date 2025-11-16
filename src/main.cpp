@@ -104,7 +104,7 @@ int main()
   // constraint #4: 9 u \leq 2(s_{1,2,3}) + s_{x}
   ++ccc;
   cname.push_back("9u leq 2(s_{1,2,3}) + s_{x}");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -9);
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(u, ccc, 9);
   lp.set_a(s1, ccc, -2);
   lp.set_a(s2, ccc, -2);
@@ -323,15 +323,16 @@ int main()
   lp.set_a(u, ccc, 15);
   lp.set_a(X, ccc, 20);
 
-  // objective function: set to minimize -13 c5 - 6 c6 - 6 t6 + c7 + 8 c8  + 15u + 20X 
-  //                        <=> maximize 13 c5 + 6 c6 + 6 t6 - c7 - 8 c8 - 15u - 20X 
-  lp.set_c(c5, -13);
-  lp.set_c(c6, -6);
-  lp.set_c(t6, -6);
-  lp.set_c(c7, 1);
-  lp.set_c(c8, 8);
-  lp.set_c(u, 15);
-  lp.set_c(X, 20);
+  const double factor = 10.0;
+  // constraint #: normalize (n-2)=factor
+  ++ccc;
+  cname.push_back("normalize: (n-2)=factor");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, factor+2);
+  lp.set_a(n, ccc, 1);
+
+  // objective function: set to minimize -E
+  //                        <=> maximize E
+  lp.set_c(E, -1);
 
   // solve the program, using ET as the exact type
   Solution s = CGAL::solve_linear_program(lp, ET());
@@ -353,12 +354,25 @@ int main()
       if (i == 4 || i == 11 || i == 15) std::cout << "\n";
     }
   }
-  else if (s.is_infeasible()) std::cout << "infeasible" << std::endl;
+  else if (s.is_infeasible()) {
+    std::cout << "infeasible\n";
+
+    std::cout << "Constraints used in infeasibility certificate:\n";
+    std::size_t c = 0;
+    for (auto it = s.infeasibility_certificate_begin();
+    it != s.infeasibility_certificate_end(); ++it, ++c)
+    {
+      if (*it != 0) {
+        std::cout << "  lambda[" << c << "] = " << *it
+          << "  ->  " << cname[c] << "\n";
+      }
+    }
+  }
   else if (!s.is_optimal()) std::cout << "no optimal solution" << std::endl;
   else {
-    std::cout << "Max value of 13c5 + 6c6 + 6t6 - c7 - 8c8  - 15u - 20X: " 
-              << -s.objective_value()
-              << " (about " << -CGAL::to_double(s.objective_value()) << ")\n\n";
+    std::cout << "|E| leq " 
+              << -s.objective_value()/factor << "n"
+              << " (about " << -(CGAL::to_double(s.objective_value())/factor) << ")\n\n";
 
     // variables
     std::vector<ET> val(s.variable_numerators_begin(), s.variable_numerators_end());
