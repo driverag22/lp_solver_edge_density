@@ -4,8 +4,6 @@
 #include <CGAL/Gmpz.h>
 #include <vector>
 #include <string>
-#include <iostream>
-#include <cassert>
 
 // choose input type (input coefficients must fit)
 typedef int IT;
