@@ -121,17 +121,6 @@ int main()
 
 
   ///// Cell counts related to crossing number
-  // constraint #5: counting wedges of a crossing
-  ++ccc;
-  cname.push_back("c5 + 2c6 + c7 + 2c8 + sx = 4X");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(c5, ccc, 1);
-  lp.set_a(c6, ccc, 2);
-  lp.set_a(c7, ccc, 1);
-  lp.set_a(c8, ccc, 2);
-  lp.set_a(sx, ccc, 1);
-  lp.set_a(X, ccc, -4);
-
   // constraint #6: c5 \leq 2X
   ++ccc;
   cname.push_back("c5 leq 2X");

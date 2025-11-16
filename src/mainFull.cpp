@@ -70,13 +70,15 @@ int main()
 
 
   //// Planarity-derived constraints
-  // constraint #0: E - X \leq 3n - 6
+  // edge density C_{4}-free planar
+  // constraint #1: E - X \leq (15/7) (n-2)
+  //                7E - 7X \leq 15 - 30
   ++ccc;
-  cname.push_back("E - X leq 3n - 6");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -6);
-  lp.set_a(E, ccc, 1);
-  lp.set_a(X, ccc, -1);
-  lp.set_a(n, ccc, -3);
+  cname.push_back("E - X leq (15/7) (n - 2)");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -30);
+  lp.set_a(E, ccc, 7);
+  lp.set_a(X, ccc, -7);
+  lp.set_a(n, ccc, -15);
 
   // constraint #1: F = (E + 2X) - (n + X) + 2
   ++ccc;
@@ -92,13 +94,30 @@ int main()
   ++ccc;
   cname.push_back("u + c5 + c6 + c7 + c8 + t6 = F");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(u, ccc, 1);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 1);
   lp.set_a(c7, ccc, 1);
   lp.set_a(c8, ccc, 1);
   lp.set_a(t6, ccc, 1);
+  lp.set_a(u, ccc, 1);
   lp.set_a(F, ccc, -1);
+
+  // constraint #: 9 u \leq 2(s_{1,2,3}) + s_{x}
+  ++ccc;
+  cname.push_back("9u leq 2(s_{1,2,3}) + s_{x}");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(u, ccc, 9);
+  lp.set_a(s1, ccc, -2);
+  lp.set_a(s2, ccc, -2);
+  lp.set_a(s3, ccc, -2);
+  lp.set_a(sx, ccc, -1);
+
+  ++ccc;
+  cname.push_back("2sx = 2s3 + s2");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(sx, ccc, 2);
+  lp.set_a(s2, ccc, -1);
+  lp.set_a(s3, ccc, -2);
 
 
 
@@ -110,12 +129,12 @@ int main()
   lp.set_a(c5, ccc, 1);
   lp.set_a(X, ccc, -2);
 
-  // constraint #4: c6 \leq X
-  ++ccc;
-  cname.push_back("c6 leq 2X");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(c6, ccc, 1);
-  lp.set_a(X, ccc, -2);
+  // // constraint #4: c6 \leq X
+  // ++ccc;
+  // cname.push_back("c6 leq 2X");
+  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  // lp.set_a(c6, ccc, 1);
+  // lp.set_a(X, ccc, -2);
 
   // constraint #5: c7 \leq 4X
   ++ccc;
@@ -124,12 +143,12 @@ int main()
   lp.set_a(c7, ccc, 1);
   lp.set_a(X, ccc, -4);
 
-  // constraint #6: c8 \leq X
-  ++ccc;
-  cname.push_back("c8 leq 2X");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(c7, ccc, 1);
-  lp.set_a(X, ccc, -2);
+  // // constraint #6: c8 \leq X
+  // ++ccc;
+  // cname.push_back("c8 leq 2X");
+  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  // lp.set_a(c7, ccc, 1);
+  // lp.set_a(X, ccc, -2);
 
   /// Triangle count related to c5, c7, c8
   // constraint #5: 3*t6 = c5 + 2*c7 + c8 + (s_{1}+s_{2}+s_{3}-s_{x})
@@ -144,6 +163,16 @@ int main()
   lp.set_a(s2, ccc, -1);
   lp.set_a(s3, ccc, -1);
   lp.set_a(sx, ccc, 1);
+  // constraint #: 3*t6 leq c5 + 2*c7 + c8 + (s1 + s2/2)
+  ++ccc;
+  cname.push_back("3t6 leq c5 + 2 c7 + c8 + (s_1 + s_2/2)");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(t6, ccc, 6);
+  lp.set_a(c5, ccc, -2);
+  lp.set_a(c7, ccc, -4);
+  lp.set_a(c8, ccc, -2);
+  lp.set_a(s1, ccc, -2);
+  lp.set_a(s2, ccc, -1);
 
 
 
@@ -165,8 +194,8 @@ int main()
 
   // constraint #9: c5 + 2*c6 + c7 + 2 c8 + s_{x} \leq 2 E_{x}
   ++ccc;
-  cname.push_back("c5+2c6+c7+2c8 leq 2 E_{x}");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  cname.push_back("c5 + 2c6 + c7 + 2c8 + sx = 2 E_{x}");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 2);
   lp.set_a(c7, ccc, 1);
@@ -188,12 +217,24 @@ int main()
   lp.set_a(sx, ccc, -1);
   lp.set_a(ep, ccc, -2);
 
-  // // // constraint #11: 3*t6 \leq E_{p}
+  // constraint #11: c5 + 2*c7 + 3*t6 + c8 + (s1 + s2/2) = 2 E_{p}
+  ++ccc;
+  cname.push_back("c5 + 2 c7 + 3 t6 + c8 + (s1 + s2/2) = 2 E_{p}");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(c5, ccc, 2);
+  lp.set_a(c7, ccc, 4);
+  lp.set_a(t6, ccc, 6);
+  lp.set_a(c8, ccc, 2);
+  lp.set_a(s1, ccc, 2);
+  lp.set_a(s2, ccc, 1);
+  lp.set_a(ep, ccc, -4);
+
+  // constraint #11: 3*t6 \leq E_{p}
   ++ccc;
   cname.push_back("3T leq 2 E_{p}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(t6, ccc, 3);
-  lp.set_a(ep, ccc, -2);
+  lp.set_a(ep, ccc, -1);
 
 
   //// Non-crossing edge constraints
@@ -270,6 +311,18 @@ int main()
   lp.set_a(s3, ccc, -1);
   lp.set_a(sx, ccc, 1);
 
+  // constraint #17: e_{t u} + e_{c5 u} + e_{c7 u} + e_{c8 u} + 2e_{u u} = s1 + s2/2
+  ++ccc;
+  cname.push_back("e_{t u} + e_{c5 u} + e_{c7 u} + e_{c8 u} + 2e_{u u} = s1 + s2/2");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(e_tu, ccc, 2);
+  lp.set_a(e_c5u, ccc, 2);
+  lp.set_a(e_c7u, ccc, 2);
+  lp.set_a(e_c8u, ccc, 2);
+  lp.set_a(e_u, ccc, 4);
+  lp.set_a(s1, ccc, -2);
+  lp.set_a(s2, ccc, -1);
+
   // constraint #17: e_{t c5} + e_{t c7} + e_{t c8} + e_{t u} \leq 3t
   ++ccc;
   cname.push_back("e_{t c5} + e_{t c7} leq 3 t6");
@@ -319,6 +372,7 @@ int main()
   lp.set_a(u, ccc, 15);
   lp.set_a(X, ccc, 20);
 
+  // const double factor = 10.0;
   // constraint #[-1]: normalization: X = 1
   ++ccc;
   cname.push_back("Normalize: n = 1");
