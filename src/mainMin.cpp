@@ -88,6 +88,22 @@ int main()
 
   int ccc = -1;
 
+  // removing crossings and triangulating
+  ++ccc;
+  cname.push_back("2E - 4X + 4 w_{5566} + ... = 6n - 12");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, -12);
+  lp.set_a(E, ccc, 2);   
+  lp.set_a(X, ccc, -4);   
+  lp.set_a(w_5566, ccc, 4);   
+  lp.set_a(w_5676, ccc, 6);   
+  lp.set_a(w_5666, ccc, 5);   
+  lp.set_a(w_6666, ccc, 6);   
+  lp.set_a(w_6667, ccc, 7);   
+  lp.set_a(w_6677, ccc, 8);   
+  lp.set_a(w_6777, ccc, 9);   
+  lp.set_a(w_7777, ccc, 10);   
+  lp.set_a(n, ccc, -6);  
+
   // one c6-type per c6 cell
   ++ccc;
   cname.push_back("w_ac + ... = c6");
@@ -399,13 +415,27 @@ int main()
   lp.set_a(e_c5, ccc, 1);
   lp.set_a(c5, ccc, -1);
 
+  // constraint #: edge density formula
+  ++ccc;
+  cname.push_back("E leq 2.4(n-2) + ...");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -96);
+  lp.set_a(E, ccc, 20);
+  lp.set_a(n, ccc, -48);
+  lp.set_a(c5, ccc, -13);
+  lp.set_a(c6, ccc, -6);
+  lp.set_a(t6, ccc, -6);
+  lp.set_a(c7, ccc, 1);
+  lp.set_a(X, ccc, 20);
+  
   // objective function: set to minimize -13 c5 - 6 c6 - 6 t6 + c7 + 20X 
   //                        <=> maximize 13 c5 + 6 c6 + 6 t6 - c7 - 20X 
-  lp.set_c(c5, -13);
-  lp.set_c(c6, -6);
-  lp.set_c(t6, -6);
-  lp.set_c(c7, 1);
-  lp.set_c(X, 20);
+  // lp.set_c(c5, -13);
+  // lp.set_c(c6, -6);
+  // lp.set_c(t6, -6);
+  // lp.set_c(c7, 1);
+  // lp.set_c(X, 20);
+  // lp.set_c(n, 1);
+  lp.set_c(E, -1);
 
   // solve the program, using ET as the exact type
   Solution s = CGAL::solve_linear_program(lp, ET());
