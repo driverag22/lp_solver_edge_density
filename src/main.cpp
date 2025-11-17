@@ -375,7 +375,5 @@ int main()
       if (*i != 0) std::cout << "  " << cname[c] << "\n";
       ++c;
     }
-
   }
-
 }

@@ -63,9 +63,9 @@ int main()
 
   // wedges including 5 cells
   const int w_5566  = ++vvv; vname.push_back("wedge 5566");
-  const int w_55u6  = ++vvv; vname.push_back("wedge 5566");
-  const int w_556u  = ++vvv; vname.push_back("wedge 5566");
-  const int w_55uu  = ++vvv; vname.push_back("wedge 5566");
+  const int w_55u6  = ++vvv; vname.push_back("wedge 55u6");
+  const int w_556u  = ++vvv; vname.push_back("wedge 556u");
+  const int w_55uu  = ++vvv; vname.push_back("wedge 55uu");
   const int w_5666  = ++vvv; vname.push_back("wedge 5666");
   const int w_566u  = ++vvv; vname.push_back("wedge 566u");
   const int w_56u6  = ++vvv; vname.push_back("wedge 56u6");
@@ -168,6 +168,19 @@ int main()
   lp.set_a(w_5u7u, ccc, 2);
   lp.set_a(sx, ccc, -1);
 
+  // if we have 55xx wedge, we cannot have those c5's adjacent to triangle
+  // if we have 55xx wedge, cannot be adjacent to another 55xx wedge
+  ++ccc;
+  cname.push_back("2 w5566 + e_tc5 + e_c5 leq c5");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_5566, ccc, 2);
+  lp.set_a(w_55u6, ccc, 2);
+  lp.set_a(w_556u, ccc, 2);
+  lp.set_a(w_55uu, ccc, 2);
+  lp.set_a(e_tc5, ccc, 1);
+  lp.set_a(e_c5, ccc, 1);
+  lp.set_a(c5, ccc, -1);
+
   //// Planarity-derived constraints
   // edge density C_{4}-free planar
   // constraint #1: E - X \leq (15/7) (n-2)
@@ -188,62 +201,71 @@ int main()
   lp.set_a(X, ccc, -1);
 
   /// Total cell counts
-  // constraint #3: u + c5 + c6 + c7 + c8 + t6 = F
+  // constraint #3: u + c5 + c6 + c7 +  t6 = F
   ++ccc;
-  cname.push_back("u + c5 + c6 + c7 + c8 + t6 = F");
+  cname.push_back("u + c5 + c6 + c7 + t6 = F");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 1);
   lp.set_a(c7, ccc, 1);
-  // lp.set_a(c8, ccc, 1);
   lp.set_a(t6, ccc, 1);
   lp.set_a(u, ccc, 1);
   lp.set_a(F, ccc, -1);
 
   // constraint #4: 9 u \leq 2(s_{1,2,3}) + s_{x}
   ++ccc;
-  cname.push_back("9u leq 2(s_{1,2,3}) + s_{x}");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -9);
-  lp.set_a(u, ccc, 9);
+  cname.push_back("8u leq 2(s_{1,2,3}) + s_{x}");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(u, ccc, 8);
   lp.set_a(s1, ccc, -2);
   lp.set_a(s2, ccc, -2);
   lp.set_a(s3, ccc, -2);
   lp.set_a(sx, ccc, -1);
 
+  ++ccc;
+  cname.push_back("2sx = 2s3 + s2");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(sx, ccc, 2);
+  lp.set_a(s2, ccc, -1);
+  lp.set_a(s3, ccc, -2);
+
 
 
   ///// Cell counts related to crossing number
-  // constraint #5: counting wedges of a crossing
-  ++ccc;
-  cname.push_back("c5 + 2c6 + c7 + 2c8 + sx = 4X");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(c5, ccc, 1);
-  lp.set_a(c6, ccc, 2);
-  lp.set_a(c7, ccc, 1);
-  // lp.set_a(c8, ccc, 2);
-  lp.set_a(sx, ccc, 1);
-  lp.set_a(X, ccc, -4);
-
   // constraint #6: c5 \leq 2X
   ++ccc;
   cname.push_back("c5 leq 2X");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(X, ccc, -2);
-
-  /// Triangle count related to c5, c7, c8, ...
-  // constraint #7: 3*t6 leq c5 + 2*c7 + c8 + (s_{1}+s_{2}+s_{3}-s_{x})
+  // constraint #5: c7 \leq 4X
   ++ccc;
-  cname.push_back("3t6 leq c5 + 2 c7 + c8 + (s_{1,2,3}-s_{x})");
+  cname.push_back("c7 leq 4X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c7, ccc, 1);
+  lp.set_a(X, ccc, -4);
+
+  /// Triangle count related to c5, c7, ...
+  // constraint #7: 3*t6 leq c5 + 2*c7 + (s_{1}+s_{2}+s_{3}-s_{x})
+  ++ccc;
+  cname.push_back("3t6 leq c5 + 2 c7 + (s_{1,2,3}-s_{x})");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(t6, ccc, 3);
   lp.set_a(c5, ccc, -1);
   lp.set_a(c7, ccc, -2);
-  // lp.set_a(c8, ccc, -1);
   lp.set_a(s1, ccc, -1);
   lp.set_a(s2, ccc, -1);
   lp.set_a(s3, ccc, -1);
   lp.set_a(sx, ccc, 1);
+  // constraint #: 3*t6 leq c5 + 2*c7 + (s1 + s2/2)
+  ++ccc;
+  cname.push_back("3t6 leq c5 + 2 c7 + (s_1 + s_2/2)");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(t6, ccc, 6);
+  lp.set_a(c5, ccc, -2);
+  lp.set_a(c7, ccc, -4);
+  lp.set_a(s1, ccc, -2);
+  lp.set_a(s2, ccc, -1);
 
 
 
@@ -263,31 +285,40 @@ int main()
   lp.set_a(ex, ccc, 1);
   lp.set_a(X, ccc, -2);
 
-  // constraint #10: c5 + 2*c6 + c7 + 2 c8 + s_{x} = 2 E_{x}
+  // constraint #10: c5 + 2*c6 + c7 + s_{x} = 2 E_{x}
   //  [covered by constraints #5 and #9]
   ++ccc;
-  cname.push_back("c5 + 2c6 + c7 + 2c8 + sx = 2 E_{x}");
+  cname.push_back("c5 + 2c6 + c7 + sx = 2 E_{x}");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 2);
   lp.set_a(c7, ccc, 1);
-  // lp.set_a(c8, ccc, 2);
   lp.set_a(sx, ccc, 1);
   lp.set_a(ex, ccc, -2);
 
-  // constraint #11: c5 + 2*c7 + 3*t6 + c8 + (s_{1,2,3}-s_{x}) = 2 E_{p}
+  // constraint #11: c5 + 2*c7 + 3*t6 + (s_{1,2,3}-s_{x}) = 2 E_{p}
   ++ccc;
-  cname.push_back("c5 + 2 c7 + 3 t6 + c8 + (s_{1,2,3}-s_{x}) = 2 E_{p}");
+  cname.push_back("c5 + 2 c7 + 3 t6 + (s_{1,2,3}-s_{x}) = 2 E_{p}");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c7, ccc, 2);
   lp.set_a(t6, ccc, 3);
-  // lp.set_a(c8, ccc, 1);
   lp.set_a(s1, ccc, 1);
   lp.set_a(s2, ccc, 1);
   lp.set_a(s3, ccc, 1);
   lp.set_a(sx, ccc, -1);
   lp.set_a(ep, ccc, -2);
+
+  // constraint #11: c5 + 2*c7 + 3*t6 + (s1 + s2/2) = 2 E_{p}
+  ++ccc;
+  cname.push_back("c5 + 2 c7 + 3 t6 + (s1 + s2/2) = 2 E_{p}");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(c5, ccc, 2);
+  lp.set_a(c7, ccc, 4);
+  lp.set_a(t6, ccc, 6);
+  lp.set_a(s1, ccc, 2);
+  lp.set_a(s2, ccc, 1);
+  lp.set_a(ep, ccc, -4);
 
   // constraint #12: 3*t6 \leq E_{p}
   // triangles cannot share edges
@@ -299,86 +330,66 @@ int main()
 
 
   //// Non-crossing edge constraints
-  // constraint #13: e_{t c5} + e_{t c7} + e_{t c8} + e_{t u}
-  //                + e_{c5 c7} + e_{c5 c8} + e_{c5 u} + e_{c7 c8} + e_{c7 u} + e_{c8 u}
-  //                + e_{c5} + e_{c7} + e_{c8} + e_{u} = E_{p}
+  // constraint #13: e_{t c5} + e_{t c7} + e_{t u}
+  //                + e_{c5 c7} + e_{c5 u} + e_{c7 u}
+  //                + e_{c5} + e_{c7} + e_{u} = E_{p}
   ++ccc;
-  cname.push_back("e_{t c5} + e_{t c7} + e_{t c8} + e_{c5 c7} + e_{c5 c8} + e_{c5 u} + ... = E_{p}");
+  cname.push_back("e_{t c5} + e_{t c7} + e_{c5 c7} + e_{c5 u} + ... = E_{p}");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   // triangle
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_tc7, ccc, 1);
-  // lp.set_a(e_tc8, ccc, 1);
   lp.set_a(e_tu, ccc, 1);
   // mixed
   lp.set_a(e_c5c7, ccc, 1);
-  // lp.set_a(e_c5c8, ccc, 1);
   lp.set_a(e_c5u, ccc, 1);
-  // lp.set_a(e_c7c8, ccc, 1);
   lp.set_a(e_c7u, ccc, 1);
-  // lp.set_a(e_c8u, ccc, 1);
   // cell to itself
   lp.set_a(e_c5, ccc, 1);
   lp.set_a(e_c7, ccc, 1);
-  // lp.set_a(e_c8, ccc, 1);
   lp.set_a(e_u, ccc, 1);
 
   lp.set_a(ep, ccc, -1);
 
-  // constraint #14: e_{t c5} + e_{c5 c7} + e_{c5 c8} + e_{c5 u} + 2 e_{c5 c5} = c5
+  // constraint #14: e_{t c5} + e_{c5 c7} + e_{c5 u} + 2 e_{c5 c5} = c5
   ++ccc;
-  cname.push_back("e_{t c5} + e_{c5 c7} + e_{c5 c8} + e_{c5 u} + 2 e_{c5 c5} = c5");
+  cname.push_back("e_{t c5} + e_{c5 c7} + e_{c5 u} + 2 e_{c5 c5} = c5");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);
-  // lp.set_a(e_c5c8, ccc, 1);
   lp.set_a(e_c5u, ccc, 1);
   lp.set_a(e_c5, ccc, 2);
   lp.set_a(c5, ccc, -1);
 
-  // constraint #15: e_{t c7} + e_{c5 c7} + e_{c7 c8} + e_{c7 u} + 2e_{c7 c7} = 2 c7
+  // constraint #15: e_{t c7} + e_{c5 c7} + e_{c7 u} + 2e_{c7 c7} = 2 c7
   ++ccc;
-  cname.push_back("e_{t c7} + e_{c5 c7} + e_{c7 c8} + e_{c7 u} + 2 e_{c7 c7} = 2 c7");
+  cname.push_back("e_{t c7} + e_{c5 c7} + e_{c7 u} + 2 e_{c7 c7} = 2 c7");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tc7, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);
-  // lp.set_a(e_c7c8, ccc, 1);
   lp.set_a(e_c7u, ccc, 1);
   lp.set_a(e_c7, ccc, 2);
   lp.set_a(c7, ccc, -2);
 
-  // constraint #16: e_{t c8} + e_{c5 c8} + e_{c7 c8} + e_{c8 u} + 2e_{c8 c8} = c8
-  // ++ccc;
-  // cname.push_back("e_{t c8} + e_{c5 c8} + e_{c7 c8} + e_{c8 u} + 2e_{c8 c8} = c8");
-  // lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  // lp.set_a(e_tc8, ccc, 1);
-  // lp.set_a(e_c5c8, ccc, 1);
-  // lp.set_a(e_c7c8, ccc, 1);
-  // lp.set_a(e_c8u, ccc, 1);
-  // lp.set_a(e_c8, ccc, 2);
-  // lp.set_a(c8, ccc, -1);
-
-  // constraint #17: e_{t u} + e_{c5 u} + e_{c7 u} + e_{c8 u} + 2e_{u u} = (s_{1,2,3}-s_{x})
+  // constraint #17: e_{t u} + e_{c5 u} + e_{c7 u} + 2e_{u u} = (s_{1,2,3}-s_{x})
   ++ccc;
-  cname.push_back("e_{t u} + e_{c5 u} + e_{c7 u} + e_{c8 u} + 2e_{u u} = (s_{1,2,3}-s_{x})");
+  cname.push_back("e_{t u} + e_{c5 u} + e_{c7 u} + 2e_{u u} = (s_{1,2,3}-s_{x})");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tu, ccc, 1);
   lp.set_a(e_c5u, ccc, 1);
   lp.set_a(e_c7u, ccc, 1);
-  // lp.set_a(e_c8u, ccc, 1);
   lp.set_a(e_u, ccc, 2);
   lp.set_a(s1, ccc, -1);
   lp.set_a(s2, ccc, -1);
   lp.set_a(s3, ccc, -1);
   lp.set_a(sx, ccc, 1);
 
-  // constraint #18: e_{t c5} + e_{t c7} + e_{t c8} + e_{t u} = 3t
+  // constraint #18: e_{t c5} + e_{t c7} + e_{t u} = 3t
   ++ccc;
-  cname.push_back("e_{t c5} + e_{t c7} + e_{t c8} + e_{t u} = 3 t6");
+  cname.push_back("e_{t c5} + e_{t c7} + e_{t u} = 3 t6");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_tc7, ccc, 1);
-  // lp.set_a(e_tc8, ccc, 1);
   lp.set_a(e_tu, ccc, 1);
   lp.set_a(t6, ccc, -3);
 
@@ -417,19 +428,19 @@ int main()
   lp.set_a(c6, ccc, -6);
   lp.set_a(t6, ccc, -6);
   lp.set_a(c7, ccc, 1);
-  // lp.set_a(c8, ccc, 8);
   lp.set_a(u, ccc, 8);
   lp.set_a(X, ccc, 20);
 
-  // objective function: set to minimize -13 c5 - 6 c6 - 6 t6 + c7 + 8 c8  + 15u + 20X 
-  //                        <=> maximize 13 c5 + 6 c6 + 6 t6 - c7 - 8 c8 - 15u - 20X 
-  lp.set_c(c5, -13);
-  lp.set_c(c6, -6);
-  lp.set_c(t6, -6);
-  lp.set_c(c7, 1);
-  // lp.set_c(c8, 8);
-  lp.set_c(u, 8);
-  lp.set_c(X, 20);
+  const double factor = 10.0;
+  // constraint #: normalize (n-2)=factor
+  ++ccc;
+  cname.push_back("normalize: (n-2)=factor");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, factor+2);
+  lp.set_a(n, ccc, 1);
+
+  // objective function: set to minimize -E
+  //                        <=> maximize E
+  lp.set_c(E, -1);
 
   // solve the program, using ET as the exact type
   Solution s = CGAL::solve_linear_program(lp, ET());
@@ -452,18 +463,31 @@ int main()
       if (i == 4 || i == 10 || i == 14 || i == 23) std::cout << "\n";
     }
   }
-  else if (s.is_infeasible()) std::cout << "infeasible" << std::endl;
+  else if (s.is_infeasible()) {
+    std::cout << "infeasible\n";
+
+    std::cout << "Constraints used in infeasibility certificate:\n";
+    std::size_t c = 0;
+    for (auto it = s.infeasibility_certificate_begin();
+    it != s.infeasibility_certificate_end(); ++it, ++c)
+    {
+      if (*it != 0) {
+        std::cout << "  lambda[" << c << "] = " << *it
+          << "  ->  " << cname[c] << "\n";
+      }
+    }
+  }
   else if (!s.is_optimal()) std::cout << "no optimal solution" << std::endl;
   else {
-    std::cout << "Max value of 13c5 + 6c6 + 6t6 - c7 - 8c8  - 15u - 20X: " 
-              << -s.objective_value()
-              << " (about " << -CGAL::to_double(s.objective_value()) << ")\n\n";
+    std::cout << "|E| leq " 
+              << -s.objective_value()/factor << "n"
+              << " (about " << -(CGAL::to_double(s.objective_value())/factor) << ")\n\n";
 
     // variables
     std::vector<ET> val(s.variable_numerators_begin(), s.variable_numerators_end());
     for (std::size_t i = 0; i < val.size(); ++i) {
       std::cout << vname[i] << " = " << val[i] << "\n";
-      if (i == 4 || i == 11 || i == 15) std::cout << "\n";
+      if (i == 4 || i == 10 || i == 14 || i == 23) std::cout << "\n";
     }
 
     // tight constraints
@@ -473,7 +497,5 @@ int main()
       if (*i != 0) std::cout << "  " << cname[c] << "\n";
       ++c;
     }
-
   }
-
 }
