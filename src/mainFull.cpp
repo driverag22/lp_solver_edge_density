@@ -165,7 +165,7 @@ int main()
   lp.set_a(sx, ccc, 1);
   // constraint #: 3*t6 leq c5 + 2*c7 + c8 + (s1 + s2/2)
   ++ccc;
-  cname.push_back("3t6 leq c5 + 2 c7 + c8 + (s_1 + s_2/2)");
+  cname.push_back("3t6 leq c5 + 2 c7 + c8 + (s_1 + s2/2)");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(t6, ccc, 6);
   lp.set_a(c5, ccc, -2);

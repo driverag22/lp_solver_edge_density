@@ -61,122 +61,69 @@ int main()
   const int e_c5u  = ++vvv; vname.push_back("noncrossing_edges_c5_u");
   const int e_c7u  = ++vvv; vname.push_back("noncrossing_edges_c7_u");
 
-  // wedges including 5 cells
-  const int w_5566  = ++vvv; vname.push_back("wedge 5566");
-  const int w_55u6  = ++vvv; vname.push_back("wedge 55u6");
-  const int w_556u  = ++vvv; vname.push_back("wedge 556u");
-  const int w_55uu  = ++vvv; vname.push_back("wedge 55uu");
-  const int w_5666  = ++vvv; vname.push_back("wedge 5666");
-  const int w_566u  = ++vvv; vname.push_back("wedge 566u");
-  const int w_56u6  = ++vvv; vname.push_back("wedge 56u6");
-  const int w_56uu  = ++vvv; vname.push_back("wedge 56uu");
-  const int w_5u66  = ++vvv; vname.push_back("wedge 5u66");
-  const int w_5u6u  = ++vvv; vname.push_back("wedge 5u6u");
-  const int w_5uu6  = ++vvv; vname.push_back("wedge 5uu6");
-  const int w_5uuu  = ++vvv; vname.push_back("wedge 5uuu");
-  const int w_5676  = ++vvv; vname.push_back("wedge 5676");
-  const int w_567u  = ++vvv; vname.push_back("wedge 567u");
-  const int w_5u76  = ++vvv; vname.push_back("wedge 5u76");
-  const int w_5u7u  = ++vvv; vname.push_back("wedge 5u7u");
+  // wedges including 5 cells (x = c6 or u)
+  const int w_55xx  = ++vvv; vname.push_back("wedge 55xx"); // a
+  const int w_5xxx  = ++vvv; vname.push_back("wedge 5xxx"); // b
+  const int w_5x7x  = ++vvv; vname.push_back("wedge 5x7x"); // c
+  // other wedges
+  const int w_xxxx = ++vvv; vname.push_back("wedge xxxx"); // d
+  const int w_xxx7 = ++vvv; vname.push_back("wedge xxx7"); // e 
+  const int w_xx77 = ++vvv; vname.push_back("wedge xx77"); // f
+  const int w_x777 = ++vvv; vname.push_back("wedge x777"); // g 
+  const int w_7777 = ++vvv; vname.push_back("wedge 7777");
 
   int ccc = -1;
 
   ++ccc;
-  cname.push_back("w_5566 + ... leq X");
+  cname.push_back("w_55xx + ... leq X");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(w_5566, ccc, 1);
-  lp.set_a(w_55u6, ccc, 1);
-  lp.set_a(w_556u, ccc, 1);
-  lp.set_a(w_55uu, ccc, 1);
-  lp.set_a(w_5666, ccc, 1);
-  lp.set_a(w_566u, ccc, 1);
-  lp.set_a(w_56u6, ccc, 1);
-  lp.set_a(w_56uu, ccc, 1);
-  lp.set_a(w_5u66, ccc, 1);
-  lp.set_a(w_5u6u, ccc, 1);
-  lp.set_a(w_5uu6, ccc, 1);
-  lp.set_a(w_5uuu, ccc, 1);
-  lp.set_a(w_5676, ccc, 1);
-  lp.set_a(w_567u, ccc, 1);
-  lp.set_a(w_5u76, ccc, 1);
-  lp.set_a(w_5u7u, ccc, 1);
+  lp.set_a(w_55xx, ccc, 1);
+  lp.set_a(w_5xxx, ccc, 1);
+  lp.set_a(w_5x7x, ccc, 1);
+  lp.set_a(w_xxxx, ccc, 1);
+  lp.set_a(w_xxx7, ccc, 1);
+  lp.set_a(w_xx77, ccc, 1);
+  lp.set_a(w_x777, ccc, 1);
+  lp.set_a(w_7777, ccc, 1);
   lp.set_a(X, ccc, -1);
 
   ++ccc;
   cname.push_back("2w_5566 + ... = c5");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(w_5566, ccc, 2);
-  lp.set_a(w_55u6, ccc, 2);
-  lp.set_a(w_556u, ccc, 2);
-  lp.set_a(w_55uu, ccc, 2);
-  lp.set_a(w_5666, ccc, 1);
-  lp.set_a(w_566u, ccc, 1);
-  lp.set_a(w_56u6, ccc, 1);
-  lp.set_a(w_56uu, ccc, 1);
-  lp.set_a(w_5u66, ccc, 1);
-  lp.set_a(w_5u6u, ccc, 1);
-  lp.set_a(w_5uu6, ccc, 1);
-  lp.set_a(w_5uuu, ccc, 1);
-  lp.set_a(w_5676, ccc, 1);
-  lp.set_a(w_567u, ccc, 1);
-  lp.set_a(w_5u76, ccc, 1);
-  lp.set_a(w_5u7u, ccc, 1);
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_55xx, ccc, 2);
+  lp.set_a(w_5xxx, ccc, 1);
+  lp.set_a(w_5x7x, ccc, 1);
   lp.set_a(c5, ccc, -1);
 
   ++ccc;
-  cname.push_back("2w_5566 + ... leq c6");
+  cname.push_back("2w_55xx + ... leq x = (c6 + sx)");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(w_5566, ccc, 2);
-  lp.set_a(w_55u6, ccc, 1);
-  lp.set_a(w_556u, ccc, 1);
-  lp.set_a(w_5666, ccc, 3);
-  lp.set_a(w_566u, ccc, 2);
-  lp.set_a(w_56u6, ccc, 2);
-  lp.set_a(w_56uu, ccc, 1);
-  lp.set_a(w_5u66, ccc, 2);
-  lp.set_a(w_5u6u, ccc, 1);
-  lp.set_a(w_5uu6, ccc, 1);
-  lp.set_a(w_5676, ccc, 2);
-  lp.set_a(w_567u, ccc, 1);
-  lp.set_a(w_5u76, ccc, 1);
+  lp.set_a(w_55xx, ccc, 2);
+  lp.set_a(w_5xxx, ccc, 3);
+  lp.set_a(w_5x7x, ccc, 2);
+  lp.set_a(w_x777, ccc, 1);
+  lp.set_a(w_xx77, ccc, 2);
+  lp.set_a(w_xxx7, ccc, 3);
+  lp.set_a(w_xxxx, ccc, 4);
   lp.set_a(c6, ccc, -1);
-
-  ++ccc;
-  cname.push_back("w_5676 + ... leq c7");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(w_5676, ccc, 1);
-  lp.set_a(w_567u, ccc, 1);
-  lp.set_a(w_5u76, ccc, 1);
-  lp.set_a(w_5u7u, ccc, 1);
-  lp.set_a(c7, ccc, -1);
-
-  ++ccc;
-  cname.push_back("w_55u6 + ... leq sx");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(w_55u6, ccc, 1);
-  lp.set_a(w_556u, ccc, 1);
-  lp.set_a(w_55uu, ccc, 2);
-  lp.set_a(w_566u, ccc, 1);
-  lp.set_a(w_56u6, ccc, 1);
-  lp.set_a(w_56uu, ccc, 2);
-  lp.set_a(w_5u66, ccc, 1);
-  lp.set_a(w_5u6u, ccc, 2);
-  lp.set_a(w_5uu6, ccc, 2);
-  lp.set_a(w_5uuu, ccc, 3);
-  lp.set_a(w_567u, ccc, 1);
-  lp.set_a(w_5u76, ccc, 1);
-  lp.set_a(w_5u7u, ccc, 2);
   lp.set_a(sx, ccc, -1);
+
+  ++ccc;
+  cname.push_back("w_5676 + ... = c7");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_5x7x, ccc, 1);
+  lp.set_a(w_xxx7, ccc, 1);
+  lp.set_a(w_xx77, ccc, 2);
+  lp.set_a(w_x777, ccc, 3);
+  lp.set_a(w_7777, ccc, 4);
+  lp.set_a(c7, ccc, -1);
 
   // if we have 55xx wedge, we cannot have those c5's adjacent to triangle
   // if we have 55xx wedge, cannot be adjacent to another 55xx wedge
   ++ccc;
-  cname.push_back("2 w5566 + e_tc5 + e_c5 leq c5");
+  cname.push_back("2 w55xx + e_tc5 + e_c5 leq c5");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(w_5566, ccc, 2);
-  lp.set_a(w_55u6, ccc, 2);
-  lp.set_a(w_556u, ccc, 2);
-  lp.set_a(w_55uu, ccc, 2);
+  lp.set_a(w_55xx, ccc, 2);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_c5, ccc, 1);
   lp.set_a(c5, ccc, -1);
@@ -201,10 +148,20 @@ int main()
   lp.set_a(X, ccc, -1);
 
   /// Total cell counts
-  // constraint #3: u + c5 + c6 + c7 +  t6 = F
+  /// NOTE: OUTER FACE MIGHT NOT BE COVERED BY s1,s2,s3,sx CONSTRUCTIONS
+  // constraint #3: u + c5 + c6 + c7 + t6 in {F-1,F}
+ ++ccc;
+  cname.push_back("u + c5 + c6 + c7 + t6 leq F");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -1);
+  lp.set_a(c5, ccc, 1);
+  lp.set_a(c6, ccc, 1);
+  lp.set_a(c7, ccc, 1);
+  lp.set_a(t6, ccc, 1);
+  lp.set_a(u, ccc, 1);
+  lp.set_a(F, ccc, -1);
   ++ccc;
-  cname.push_back("u + c5 + c6 + c7 + t6 = F");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  cname.push_back("u + c5 + c6 + c7 + t6 geq F-1");
+  lp.set_r(ccc, CGAL::LARGER); lp.set_b(ccc, -1);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 1);
   lp.set_a(c7, ccc, 1);
@@ -212,7 +169,7 @@ int main()
   lp.set_a(u, ccc, 1);
   lp.set_a(F, ccc, -1);
 
-  // constraint #4: 9 u \leq 2(s_{1,2,3}) + s_{x}
+  // constraint #4: 8 u \leq 2(s_{1,2,3}) + s_{x}
   ++ccc;
   cname.push_back("8u leq 2(s_{1,2,3}) + s_{x}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
@@ -259,7 +216,7 @@ int main()
   lp.set_a(sx, ccc, 1);
   // constraint #: 3*t6 leq c5 + 2*c7 + (s1 + s2/2)
   ++ccc;
-  cname.push_back("3t6 leq c5 + 2 c7 + (s_1 + s_2/2)");
+  cname.push_back("3t6 leq c5 + 2 c7 + (s_1 + s2/2)");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(t6, ccc, 6);
   lp.set_a(c5, ccc, -2);
@@ -323,7 +280,7 @@ int main()
   // constraint #12: 3*t6 \leq E_{p}
   // triangles cannot share edges
   ++ccc;
-  cname.push_back("3T leq E_{p}");
+  cname.push_back("3t6 leq E_{p}");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(t6, ccc, 3);
   lp.set_a(ep, ccc, -1);
@@ -383,6 +340,16 @@ int main()
   lp.set_a(s2, ccc, -1);
   lp.set_a(s3, ccc, -1);
   lp.set_a(sx, ccc, 1);
+  // constraint #17: e_{t u} + e_{c5 u} + e_{c7 u} + 2e_{u u} = s1 + s2/2
+  ++ccc;
+  cname.push_back("e_{t u} + e_{c5 u} + e_{c7 u} + 2e_{u u} = s1 + s2/2");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(e_tu, ccc, 2);
+  lp.set_a(e_c5u, ccc, 2);
+  lp.set_a(e_c7u, ccc, 2);
+  lp.set_a(e_u, ccc, 4);
+  lp.set_a(s1, ccc, -2);
+  lp.set_a(s2, ccc, -1);
 
   // constraint #18: e_{t c5} + e_{t c7} + e_{t u} = 3t
   ++ccc;

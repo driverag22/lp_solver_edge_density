@@ -48,6 +48,10 @@ int main()
 
   const int e_c5c7 = ++vvv; vname.push_back("noncrossing_edges_c5_c7");
 
+  const int p_55 = ++vvv; vname.push_back("path_c5_c5");
+  const int p_57 = ++vvv; vname.push_back("path_c5_c7");
+  const int p_77 = ++vvv; vname.push_back("path_c7_c7");
+
   // wedges including 5 cells
   const int w_5566 = ++vvv; vname.push_back("wedge 5566"); // a
   const int w_5676 = ++vvv; vname.push_back("wedge 5676"); // b
@@ -87,6 +91,37 @@ int main()
   const int w_gg = ++vvv; vname.push_back("wedge 6777 to 6777");
 
   int ccc = -1;
+
+  /// 6-cell paths
+  ++ccc;
+  cname.push_back("2w5566 + w5666 = 2 p55 + p57");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_5566, ccc, 2);   
+  lp.set_a(w_5666, ccc, 1);   
+  lp.set_a(p_55, ccc, -2);  
+  lp.set_a(p_57, ccc, -1);  
+  ++ccc;
+  cname.push_back("w6777 + 2w6677 + w6667 = 2 p77 + p57");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(w_6777, ccc, 1);   
+  lp.set_a(w_6677, ccc, 2);   
+  lp.set_a(w_6667, ccc, 1);   
+  lp.set_a(p_77, ccc, -2);  
+  lp.set_a(p_57, ccc, -1);  
+  ++ccc;
+  cname.push_back("2 p55 + 2 p57 + 2 p77 leq c5 + c7");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(p_55, ccc, 2);  
+  lp.set_a(p_57, ccc, 2);    
+  lp.set_a(p_77, ccc, 2);  
+  lp.set_a(c7, ccc, -1);  
+  lp.set_a(c5, ccc, -1);  
+  ++ccc;
+  cname.push_back("p55 leq c6");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(p_55, ccc, 1);  
+  lp.set_a(c6, ccc, -1);  
+
 
   // removing crossings and triangulating
   ++ccc;
@@ -168,7 +203,7 @@ int main()
   lp.set_a(w_cf, ccc, 1);
   lp.set_a(w_cg, ccc, 1);
   lp.set_a(w_5666, ccc, -3);
-  // each c wedge can only combine with one a or b wedge
+  // each c wedge can only combine with at most one a or b wedge
   cname.push_back("w_ac + w_bc leq w_5666 = c");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(w_ac, ccc, 1);
@@ -466,7 +501,7 @@ int main()
     std::vector<ET> val(s.variable_numerators_begin(), s.variable_numerators_end());
     for (std::size_t i = 0; i < val.size(); ++i) {
       std::cout << vname[i] << " = " << val[i] << "\n";
-      if (i == 5 || i == 9 || i == 14 || i == 22) std::cout << "\n";
+      if (i == 5 || i == 9 || i == 14 || i == 17 || i == 25) std::cout << "\n";
     }
 
     // tight constraints
