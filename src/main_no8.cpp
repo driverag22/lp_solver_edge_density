@@ -88,7 +88,7 @@ int main()
   lp.set_a(X, ccc, -1);
 
   ++ccc;
-  cname.push_back("2w_5566 + ... = c5");
+  cname.push_back("2w_5566 + ... leq c5");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(w_55xx, ccc, 2);
   lp.set_a(w_5xxx, ccc, 1);
@@ -96,7 +96,7 @@ int main()
   lp.set_a(c5, ccc, -1);
 
   ++ccc;
-  cname.push_back("2w_55xx + ... leq x = (c6 + sx)");
+  cname.push_back("2w_55xx + ... leq x leq (c6 + sx)");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(w_55xx, ccc, 2);
   lp.set_a(w_5xxx, ccc, 3);
@@ -109,7 +109,7 @@ int main()
   lp.set_a(sx, ccc, -1);
 
   ++ccc;
-  cname.push_back("w_5676 + ... = c7");
+  cname.push_back("w_5676 + ... leq c7");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(w_5x7x, ccc, 1);
   lp.set_a(w_xxx7, ccc, 1);
@@ -149,7 +149,7 @@ int main()
 
   /// Total cell counts
   /// NOTE: OUTER FACE MIGHT NOT BE COVERED BY s1,s2,s3,sx CONSTRUCTIONS
-  // constraint #3: u + c5 + c6 + c7 + t6 in {F-1,F}
+  // constraint #3: u + c5 + c6 + c7 + t6 \leq F
  ++ccc;
   cname.push_back("u + c5 + c6 + c7 + t6 leq F");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -1);
@@ -160,14 +160,6 @@ int main()
   lp.set_a(u, ccc, 1);
   lp.set_a(F, ccc, -1);
   ++ccc;
-  cname.push_back("u + c5 + c6 + c7 + t6 geq F-1");
-  lp.set_r(ccc, CGAL::LARGER); lp.set_b(ccc, -1);
-  lp.set_a(c5, ccc, 1);
-  lp.set_a(c6, ccc, 1);
-  lp.set_a(c7, ccc, 1);
-  lp.set_a(t6, ccc, 1);
-  lp.set_a(u, ccc, 1);
-  lp.set_a(F, ccc, -1);
 
   // constraint #4: 8 u \leq 2(s_{1,2,3}) + s_{x}
   ++ccc;
