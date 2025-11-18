@@ -76,7 +76,7 @@ int main()
 
   ++ccc;
   cname.push_back("w_55xx + ... leq X");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(w_55xx, ccc, 1);
   lp.set_a(w_5xxx, ccc, 1);
   lp.set_a(w_5x7x, ccc, 1);
@@ -88,16 +88,16 @@ int main()
   lp.set_a(X, ccc, -1);
 
   ++ccc;
-  cname.push_back("2w_5566 + ... leq c5");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  cname.push_back("2w_5566 + ... = c5");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(w_55xx, ccc, 2);
   lp.set_a(w_5xxx, ccc, 1);
   lp.set_a(w_5x7x, ccc, 1);
   lp.set_a(c5, ccc, -1);
 
   ++ccc;
-  cname.push_back("2w_55xx + ... leq x leq (c6 + sx)");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  cname.push_back("2w_55xx + ... = (c6 + sx)");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(w_55xx, ccc, 2);
   lp.set_a(w_5xxx, ccc, 3);
   lp.set_a(w_5x7x, ccc, 2);
@@ -105,12 +105,12 @@ int main()
   lp.set_a(w_xx77, ccc, 2);
   lp.set_a(w_xxx7, ccc, 3);
   lp.set_a(w_xxxx, ccc, 4);
-  lp.set_a(c6, ccc, -1);
+  lp.set_a(c6, ccc, -2);
   lp.set_a(sx, ccc, -1);
 
   ++ccc;
-  cname.push_back("w_5676 + ... leq c7");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  cname.push_back("w_5676 + ... = c7");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(w_5x7x, ccc, 1);
   lp.set_a(w_xxx7, ccc, 1);
   lp.set_a(w_xx77, ccc, 2);
@@ -152,7 +152,7 @@ int main()
   // constraint #3: u + c5 + c6 + c7 + t6 \leq F
  ++ccc;
   cname.push_back("u + c5 + c6 + c7 + t6 leq F");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, -1);
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(c6, ccc, 1);
   lp.set_a(c7, ccc, 1);
@@ -180,32 +180,7 @@ int main()
 
 
 
-  ///// Cell counts related to crossing number
-  // constraint #6: c5 \leq 2X
-  ++ccc;
-  cname.push_back("c5 leq 2X");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(c5, ccc, 1);
-  lp.set_a(X, ccc, -2);
-  // constraint #5: c7 \leq 4X
-  ++ccc;
-  cname.push_back("c7 leq 4X");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(c7, ccc, 1);
-  lp.set_a(X, ccc, -4);
-
   /// Triangle count related to c5, c7, ...
-  // constraint #7: 3*t6 leq c5 + 2*c7 + (s_{1}+s_{2}+s_{3}-s_{x})
-  ++ccc;
-  cname.push_back("3t6 leq c5 + 2 c7 + (s_{1,2,3}-s_{x})");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(t6, ccc, 3);
-  lp.set_a(c5, ccc, -1);
-  lp.set_a(c7, ccc, -2);
-  lp.set_a(s1, ccc, -1);
-  lp.set_a(s2, ccc, -1);
-  lp.set_a(s3, ccc, -1);
-  lp.set_a(sx, ccc, 1);
   // constraint #: 3*t6 leq c5 + 2*c7 + (s1 + s2/2)
   ++ccc;
   cname.push_back("3t6 leq c5 + 2 c7 + (s_1 + s2/2)");
@@ -244,19 +219,6 @@ int main()
   lp.set_a(c7, ccc, 1);
   lp.set_a(sx, ccc, 1);
   lp.set_a(ex, ccc, -2);
-
-  // constraint #11: c5 + 2*c7 + 3*t6 + (s_{1,2,3}-s_{x}) = 2 E_{p}
-  ++ccc;
-  cname.push_back("c5 + 2 c7 + 3 t6 + (s_{1,2,3}-s_{x}) = 2 E_{p}");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(c5, ccc, 1);
-  lp.set_a(c7, ccc, 2);
-  lp.set_a(t6, ccc, 3);
-  lp.set_a(s1, ccc, 1);
-  lp.set_a(s2, ccc, 1);
-  lp.set_a(s3, ccc, 1);
-  lp.set_a(sx, ccc, -1);
-  lp.set_a(ep, ccc, -2);
 
   // constraint #11: c5 + 2*c7 + 3*t6 + (s1 + s2/2) = 2 E_{p}
   ++ccc;
@@ -320,18 +282,6 @@ int main()
   lp.set_a(e_c7, ccc, 2);
   lp.set_a(c7, ccc, -2);
 
-  // constraint #17: e_{t u} + e_{c5 u} + e_{c7 u} + 2e_{u u} = (s_{1,2,3}-s_{x})
-  ++ccc;
-  cname.push_back("e_{t u} + e_{c5 u} + e_{c7 u} + 2e_{u u} = (s_{1,2,3}-s_{x})");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(e_tu, ccc, 1);
-  lp.set_a(e_c5u, ccc, 1);
-  lp.set_a(e_c7u, ccc, 1);
-  lp.set_a(e_u, ccc, 2);
-  lp.set_a(s1, ccc, -1);
-  lp.set_a(s2, ccc, -1);
-  lp.set_a(s3, ccc, -1);
-  lp.set_a(sx, ccc, 1);
   // constraint #17: e_{t u} + e_{c5 u} + e_{c7 u} + 2e_{u u} = s1 + s2/2
   ++ccc;
   cname.push_back("e_{t u} + e_{c5 u} + e_{c7 u} + 2e_{u u} = s1 + s2/2");
@@ -352,6 +302,20 @@ int main()
   lp.set_a(e_tu, ccc, 1);
   lp.set_a(t6, ccc, -3);
 
+  // constraint #5: c7 \leq 4X
+  ++ccc;
+  cname.push_back("c7 leq 4X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c7, ccc, 1);
+  lp.set_a(X, ccc, -4);
+  // constraint #5: c6 \leq 2X
+  ++ccc;
+  cname.push_back("c6 leq 2X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c7, ccc, 1);
+  lp.set_a(X, ccc, -2);
+
+  
   // constraint #19: e_{t c5} \leq X
   // cell c5 adjacent to a triangle cannot "share" crossing with another c5
   ++ccc;
