@@ -341,6 +341,16 @@ int main()
   lp.set_a(e_c5c7, ccc, 1);
   lp.set_a(X, ccc, -2);
 
+  // if we have 55xx wedge, we cannot have those c5's adjacent to triangle
+  // if we have 55xx wedge, cannot be adjacent to another 5566 wedge
+  ++ccc;
+  cname.push_back("2 w55xx + e_tc5 + e_c5 leq c5");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_55xx, ccc, 2);
+  lp.set_a(e_tc5, ccc, 1);
+  lp.set_a(e_c5, ccc, 1);
+  lp.set_a(c5, ccc, -1);
+
   // constraint #21: edge density formula
   ++ccc;
   cname.push_back("E leq 2.4(n-2) + ...");

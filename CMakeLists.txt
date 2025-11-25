@@ -36,8 +36,8 @@ endif()
 # Creating entries for target: lp_solver
 # ############################
 
-# add_executable( lp_solver  src/mainMin.cpp )
-add_executable( lp_solver  src/main_no8.cpp )
+add_executable( lp_solver  src/mainMin.cpp )
+# add_executable( lp_solver  src/main_no8.cpp )
 # add_executable( lp_solver  src/main.cpp )
 # add_executable( lp_solver  src/mainFull.cpp )
 
