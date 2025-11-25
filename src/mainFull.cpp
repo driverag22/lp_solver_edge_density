@@ -67,8 +67,6 @@ int main()
 
   int ccc = -1;
 
-
-
   //// Planarity-derived constraints
   // edge density C_{4}-free planar
   // constraint #1: E - X \leq (15/7) (n-2)
@@ -129,12 +127,12 @@ int main()
   lp.set_a(c5, ccc, 1);
   lp.set_a(X, ccc, -2);
 
-  // // constraint #4: c6 \leq X
-  // ++ccc;
-  // cname.push_back("c6 leq 2X");
-  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  // lp.set_a(c6, ccc, 1);
-  // lp.set_a(X, ccc, -2);
+  // constraint #4: c6 \leq 2X
+  ++ccc;
+  cname.push_back("c6 leq 2X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c6, ccc, 1);
+  lp.set_a(X, ccc, -2);
 
   // constraint #5: c7 \leq 4X
   ++ccc;
@@ -143,18 +141,18 @@ int main()
   lp.set_a(c7, ccc, 1);
   lp.set_a(X, ccc, -4);
 
-  // // constraint #6: c8 \leq X
-  // ++ccc;
-  // cname.push_back("c8 leq 2X");
-  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  // lp.set_a(c7, ccc, 1);
-  // lp.set_a(X, ccc, -2);
+  // constraint #6: c8 \leq X
+  ++ccc;
+  cname.push_back("c8 leq 2X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c7, ccc, 1);
+  lp.set_a(X, ccc, -2);
 
   /// Triangle count related to c5, c7, c8
   // constraint #5: 3*t6 = c5 + 2*c7 + c8 + (s_{1}+s_{2}+s_{3}-s_{x})
   ++ccc;
   cname.push_back("3t6 = c5 + 2 c7 + c8 + (s_{1,2,3}-s_{x})");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(t6, ccc, 3);
   lp.set_a(c5, ccc, -1);
   lp.set_a(c7, ccc, -2);
@@ -256,7 +254,7 @@ int main()
   lp.set_a(e_c7c8, ccc, 1);
   lp.set_a(e_c7u, ccc, 1);
   lp.set_a(e_c8u, ccc, 1);
-  // cell to cell
+  // cell to itself
   lp.set_a(e_c5, ccc, 1);
   lp.set_a(e_c7, ccc, 1);
   lp.set_a(e_c8, ccc, 1);
@@ -381,13 +379,6 @@ int main()
 
   // objective function: set to minimize -13 c5 - 6 c6 - 6 t6 + c7 + 8 c8  + 15u + 20X 
   //                        <=> maximize 13 c5 + 6 c6 + 6 t6 - c7 - 8 c8 - 15u - 20X 
-  // lp.set_c(c5, -13);
-  // lp.set_c(c6, -6);
-  // lp.set_c(t6, -6);
-  // lp.set_c(c7, 1);
-  // lp.set_c(c8, 8);
-  // lp.set_c(u, 15);
-  // lp.set_c(X, 20);
   lp.set_c(E, -1);
 
   // solve the program, using ET as the exact type

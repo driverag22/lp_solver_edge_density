@@ -126,6 +126,27 @@ int main()
   lp.set_a(c5, ccc, 1);
   lp.set_a(X, ccc, -2);
 
+  // constraint #4: c6 \leq 2X
+  ++ccc;
+  cname.push_back("c6 leq 2X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c6, ccc, 1);
+  lp.set_a(X, ccc, -2);
+
+  // constraint #5: c7 \leq 4X
+  ++ccc;
+  cname.push_back("c7 leq 4X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c7, ccc, 1);
+  lp.set_a(X, ccc, -4);
+
+  // constraint #5: c8 \leq 2X
+  ++ccc;
+  cname.push_back("c8 leq 2X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c7, ccc, 1);
+  lp.set_a(X, ccc, -2);
+
   /// Triangle count related to c5, c7, c8, ...
   // constraint #7: 3*t6 leq c5 + 2*c7 + c8 + (s1 + s2/2)
   ++ccc;
@@ -310,7 +331,7 @@ int main()
   lp.set_a(u, ccc, 15);
   lp.set_a(X, ccc, 20);
 
-  const double factor = 10.0;
+  const double factor = 1.0;
   // constraint #: normalize (n-2)=factor
   ++ccc;
   cname.push_back("normalize: (n-2)=factor");
