@@ -40,6 +40,7 @@ add_executable( lp_solver  src/mainMin.cpp )
 # add_executable( lp_solver  src/main_no8.cpp )
 # add_executable( lp_solver  src/main.cpp )
 # add_executable( lp_solver  src/mainFull.cpp )
+# add_executable( lp_solver  src/c4_finder.cpp )
 
 add_to_cached_list( CGAL_EXECUTABLE_TARGETS lp_solver )
 
