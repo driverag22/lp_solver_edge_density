@@ -67,6 +67,13 @@ int main()
 
   int ccc = -1;
 
+  // all vertices have degree geq 3
+  ++ccc;
+  cname.push_back("3n leq 2E");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(n, ccc, 3);  
+  lp.set_a(E, ccc, -2);  
+
   //// Planarity-derived constraints
   // edge density C_{4}-free planar
   // constraint #1: E - X \leq (15/7) (n-2)
@@ -331,7 +338,7 @@ int main()
   lp.set_a(u, ccc, 15);
   lp.set_a(X, ccc, 20);
 
-  const double factor = 1.0;
+  const double factor = 10.0;
   // constraint #: normalize (n-2)=factor
   ++ccc;
   cname.push_back("normalize: (n-2)=factor");

@@ -25,7 +25,12 @@ int main()
 
   // variables
   int vvv = -1;
-  const int n = ++vvv; vname.push_back("#num_vertices"); // lower bound
+  const int n = ++vvv; vname.push_back("#num_vertices");
+  const int n3 = ++vvv; vname.push_back("#num_vertices_deg_3");
+  const int n4 = ++vvv; vname.push_back("#num_vertices_deg_4");
+  const int n5 = ++vvv; vname.push_back("#num_vertices_deg_5");
+  const int n6 = ++vvv; vname.push_back("#num_vertices_deg_geq_6");
+  
   const int F  = ++vvv; vname.push_back("#cells");
   const int X = ++vvv; vname.push_back("#crossings");
   const int E = ++vvv; vname.push_back("#edges");
@@ -47,10 +52,6 @@ int main()
   const int e_c7   = ++vvv; vname.push_back("noncrossing_edges_c7_c7");
 
   const int e_c5c7 = ++vvv; vname.push_back("noncrossing_edges_c5_c7");
-
-  const int p_55 = ++vvv; vname.push_back("path_c5_c5");
-  const int p_57 = ++vvv; vname.push_back("path_c5_c7");
-  const int p_77 = ++vvv; vname.push_back("path_c7_c7");
 
   // wedges including 5 cells
   const int w_5566 = ++vvv; vname.push_back("wedge 5566"); // a
@@ -92,35 +93,32 @@ int main()
 
   int ccc = -1;
 
-  /// 6-cell paths
+  // every arrow leads to two c7s
   ++ccc;
-  cname.push_back("2w5566 + w5666 = 2 p55 + p57");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(w_5566, ccc, 2);   
-  lp.set_a(w_5666, ccc, 1);   
-  lp.set_a(p_55, ccc, -2);  
-  lp.set_a(p_57, ccc, -1);  
-  ++ccc;
-  cname.push_back("w6777 + 2w6677 + w6667 = 2 p77 + p57");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
-  lp.set_a(w_6777, ccc, 1);   
-  lp.set_a(w_6677, ccc, 2);   
-  lp.set_a(w_6667, ccc, 1);   
-  lp.set_a(p_77, ccc, -2);  
-  lp.set_a(p_57, ccc, -1);  
-  ++ccc;
-  cname.push_back("2 p55 + 2 p57 + 2 p77 leq c5 + c7");
+  cname.push_back("w5566 leq c7");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(p_55, ccc, 2);  
-  lp.set_a(p_57, ccc, 2);    
-  lp.set_a(p_77, ccc, 2);  
+  lp.set_a(w_5566, ccc, 1);  
   lp.set_a(c7, ccc, -1);  
-  lp.set_a(c5, ccc, -1);  
+
+  // vertices
   ++ccc;
-  cname.push_back("p55 leq c6");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(p_55, ccc, 1);  
-  lp.set_a(c6, ccc, -1);  
+  cname.push_back("n3+n4+n5+n6 = n");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(n3, ccc, 1);  
+  lp.set_a(n4, ccc, 1);  
+  lp.set_a(n5, ccc, 1);  
+  lp.set_a(n6, ccc, 1);  
+  lp.set_a(n, ccc, -1);  
+
+  // // handshake lemma
+  // ++ccc;
+  // cname.push_back("3 n3 + 4 n4 + 5 n5 + 6 n6 leq 2E");
+  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  // lp.set_a(n3, ccc, 3);  
+  // lp.set_a(n4, ccc, 4);  
+  // lp.set_a(n5, ccc, 5);  
+  // lp.set_a(n6, ccc, 6);  
+  // lp.set_a(E, ccc, -2);  
 
 
   // removing crossings and triangulating
@@ -280,7 +278,7 @@ int main()
   lp.set_a(c5, ccc, -1);
 
   ++ccc;
-  cname.push_back("2w_5566 + ... = c6");
+  cname.push_back("2w_5566 + ... = 2 c6");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(w_5566, ccc, 2);
   lp.set_a(w_5666, ccc, 3);
@@ -333,12 +331,26 @@ int main()
 
 
   /// Cell count related to crossing number
-  // constraint #3: c5 \leq 2X
+  // constraint #: c5 \leq 2X
   ++ccc;
   cname.push_back("c5 leq 2X");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(X, ccc, -2);
+  /// Cell count related to crossing number
+  // constraint #: c6 \leq 2X
+  ++ccc;
+  cname.push_back("c6 leq 2X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c6, ccc, 1);
+  lp.set_a(X, ccc, -2);
+   /// Cell count related to crossing number
+  // constraint #: c7 \leq 4X
+  ++ccc;
+  cname.push_back("c7 leq 4X");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(c6, ccc, 1);
+  lp.set_a(X, ccc, -4);
 
 
   //// Edge constraints
@@ -391,9 +403,9 @@ int main()
 
   lp.set_a(ep, ccc, -1);
 
-  // constraint #9: e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} \leq c5
+  // constraint #9: e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} = c5
   ++ccc;
-  cname.push_back("e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} leq c5");
+  cname.push_back("e_{t c5} + e_{c5 c7} + 2 e_{c5 c5} = c5");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);
@@ -401,9 +413,9 @@ int main()
 
   lp.set_a(c5, ccc, -1);
 
-  // constraint #10: e_{t c7} + e_{c5 c7} + 2e_{c7} \leq 2 c7
+  // constraint #10: e_{t c7} + e_{c5 c7} + 2e_{c7} = 2 c7
   ++ccc;
-  cname.push_back("e_{t c7} + e_{c5 c7} + 2e_{c7} leq 2 c7");
+  cname.push_back("e_{t c7} + e_{c5 c7} + 2e_{c7} = 2 c7");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tc7, ccc, 1);
   lp.set_a(e_c5c7, ccc, 1);
@@ -411,16 +423,15 @@ int main()
 
   lp.set_a(c7, ccc, -2);
 
-  // constraint #11: e_{t c5} + e_{t c7} \leq 3t
+  // constraint #11: e_{t c5} + e_{t c7} = 3t
   ++ccc;
   cname.push_back("e_{t c5} + e_{t c7} leq 3 t6");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_tc7, ccc, 1);
-
   lp.set_a(t6, ccc, -3);
 
-  // constraint #20: c5 \leq 2X - e_{t c5} - e_{c5}
+  // constraint #20: c5 \leq 2X - e_{t c5} - e_{c5} - e_{c5 c7}
   // each crossing can give two c5's, but:
   //   - if a c5 is adjacent to a triangle, then only 1
   //   - if a c5 is adjacent to another c5 on non-crossing edge, 
@@ -459,10 +470,18 @@ int main()
   lp.set_a(c7, ccc, 1);
   lp.set_a(X, ccc, 20);
 
+  // ++ccc;
+  // cname.push_back("w_5676 leq c7 - 2 e_c5c7");
+  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  // lp.set_a(e_c5c7, ccc, 2);
+  // lp.set_a(w_5676, ccc, 1);
+  // lp.set_a(c7, ccc, -1);
+
   // constraint #: normalize (n-2)=1
+  const double factor = 10.0;
   ++ccc;
-  cname.push_back("n-2=1");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 3);
+  cname.push_back("n-2=factor");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, (factor+2));
   lp.set_a(n, ccc, 1);
   
   // objective function: set to minimize -E
@@ -480,13 +499,13 @@ int main()
     int i = 0;
     for (auto xit = s.variable_values_begin(); xit != s.variable_values_end(); ++xit, ++i) {
       std::cout << "[" << vname[i] << "] = " << *xit << "\n";
-      if (i == 5 || i == 9 || i == 14) std::cout << "\n";
+      if (i == 4 || i == 9 || i == 13 || i == 18) std::cout << "\n";
     }
     std::cout << "\n\n\n\ndirection:\n\n";
     i = 0;
     for (auto it = s.unboundedness_certificate_begin(); it != s.unboundedness_certificate_end(); ++it, ++i) {
       std::cout << "[" << vname[i] << "] = " << *it << "\n";
-      if (i == 5 || i == 9 || i == 14) std::cout << "\n";
+      if (i == 4 || i == 9 || i == 13 || i == 18) std::cout << "\n";
     }
   }
   else if (s.is_infeasible()) std::cout << "infeasible" << std::endl;
@@ -494,14 +513,14 @@ int main()
   else {
     // std::cout << "Max value of 13c5 + 6c6 + 6t6 - c7 - 8c8  - 15u - 20X: " 
     std::cout << "|E| leq " 
-              << -s.objective_value() << "n"
-              << " (about " << -CGAL::to_double(s.objective_value()) << ")\n\n";
+              << -(s.objective_value()/factor) << "n"
+              << " (about " << -CGAL::to_double(s.objective_value())/factor << ")\n\n";
 
     // variables
     std::vector<ET> val(s.variable_numerators_begin(), s.variable_numerators_end());
     for (std::size_t i = 0; i < val.size(); ++i) {
       std::cout << vname[i] << " = " << val[i] << "\n";
-      if (i == 5 || i == 9 || i == 14 || i == 17 || i == 25) std::cout << "\n";
+      if (i == 4 || i == 9 || i == 13 || i == 18 || i == 26) std::cout << "\n";
     }
 
     // tight constraints

@@ -74,6 +74,13 @@ int main()
 
   int ccc = -1;
 
+  // all vertices have degree geq 3
+  ++ccc;
+  cname.push_back("3n leq 2E");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(n, ccc, 3);  
+  lp.set_a(E, ccc, -2);  
+
   ++ccc;
   cname.push_back("w_55xx + ... leq X");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
