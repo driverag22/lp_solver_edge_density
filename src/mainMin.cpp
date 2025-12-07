@@ -91,6 +91,11 @@ int main()
   const int w_fg = ++vvv; vname.push_back("wedge 6677 to 6777");
   const int w_gg = ++vvv; vname.push_back("wedge 6777 to 6777");
 
+  const int c7_full_tr = ++vvv; vname.push_back("c7 adj to edges from same triangle");
+  const int c7_partial_tr = ++vvv; vname.push_back("c7 adj to edges from single triangle");
+  const int c7_arr = ++vvv; vname.push_back("c7 adj to edges from same arrow");
+  const int c7_e = ++vvv; vname.push_back("c7 adj to edges from c5 but not same arrow");
+
   int ccc = -1;
 
   // every arrow leads to two c7s
@@ -457,6 +462,68 @@ int main()
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_c5, ccc, 1);
   lp.set_a(c5, ccc, -1);
+
+  // constraint #: divide t-c7 edges into two cases:
+  //     - c7 adjacent to a single triangle (two edges)
+  //     - c7 adjacent to separate triangles (one edge for each)
+  ++ccc;
+  cname.push_back("e_tc7 = 2 c7_tr + c7_2tr");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
+  lp.set_a(e_tc7, ccc, 1);
+  lp.set_a(c7_full_tr, ccc, -2);
+  lp.set_a(c7_partial_tr, ccc, -1);
+  // constraint #: divide c5-c7 edges into two cases:
+  //     - c7 adjacent to a single arrow (two edges)
+  //     - any other c5-c7 edge (one edge)
+  ++ccc;
+  cname.push_back("e_c5c7 = 2c7_arr + c7_e");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
+  lp.set_a(e_c5c7, ccc, 1);
+  lp.set_a(c7_arr, ccc, -2);
+  lp.set_a(c7_e, ccc, -1);
+
+  //  - c7_full_tr gives two c7-adjacent edges
+  //  - c7_partial_tr gives one
+  //  - c7_arr gives two 
+  //  - c7_e gives one
+  //  - e_c7 gives two (edge between two c7s)
+  //  - each c7 has two edges
+  ++ccc;
+  cname.push_back("2c7_tr + c7_2tr + 2 c7_arr + c7_e + 2 e_c7 = 2c7");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
+  lp.set_a(c7_full_tr, ccc, 2);
+  lp.set_a(c7_partial_tr, ccc, 1);
+  lp.set_a(c7_arr, ccc, 2);
+  lp.set_a(c7_e, ccc, 1);
+  lp.set_a(e_c7, ccc, 2);
+  lp.set_a(c7, ccc, -2);
+
+  // c7 adjacent to single triangle cannot be on 5676 wedge
+  // c7 adjacent to single arrow cannot be on 5676 wedge
+  ++ccc;
+  cname.push_back("w_5676 leq c7 - c7_full_tr - c7_arr");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
+  lp.set_a(w_5676, ccc, 1);
+  lp.set_a(c7_full_tr, ccc, 1);
+  lp.set_a(c7_arr, ccc, 1);
+  lp.set_a(c7, ccc, -1);
+
+  // c7_arr appears at most once per arrow
+  ++ccc;
+  cname.push_back("c7_arr leq w5566");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
+  lp.set_a(c7_arr, ccc, 1);
+  lp.set_a(w_5566, ccc, -1);
+
+  // c5's on arrow cannot be adjacent to triangle
+  ++ccc;
+  cname.push_back("e_tc5 leq c5 - 2w_5566");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
+  lp.set_a(e_tc5, ccc, 1);
+  lp.set_a(c5, ccc, -1);
+  lp.set_a(w_5566, ccc, 2);
+
+
 
   // constraint #: edge density formula
   ++ccc;
