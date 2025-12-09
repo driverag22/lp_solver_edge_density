@@ -96,7 +96,330 @@ int main()
   const int c7_arr = ++vvv; vname.push_back("c7 adj to edges from same arrow");
   const int c7_e = ++vvv; vname.push_back("c7 adj to edges from c5 but not same arrow");
 
+  //// Degree 3 (20 total)
+  // all same: four choices
+  const int d3_666 = ++vvv; vname.push_back("degree 3 vertex with cells 666");
+  const int d3_777 = ++vvv; vname.push_back("degree 3 vertex with cells 777");
+  // two equal, one diff: for a<b we have aab and abb, so (3+2+1)*2=12
+  const int d3_557 = ++vvv; vname.push_back("degree 3 vertex with cells 577");
+  const int d3_577 = ++vvv; vname.push_back("degree 3 vertex with cells 577");
+  const int d3_677 = ++vvv; vname.push_back("degree 3 vertex with cells 677");
+  const int d3_t77 = ++vvv; vname.push_back("degree 3 vertex with cells t77");
+  // three distinct: for a<b<c we have 4
+  const int d3_567 = ++vvv; vname.push_back("degree 3 vertex with cells 567");
+  const int d3_56t = ++vvv; vname.push_back("degree 3 vertex with cells 56t");
+  const int d3_5t7 = ++vvv; vname.push_back("degree 3 vertex with cells 5t7");
+  const int d3_6t7 = ++vvv; vname.push_back("degree 3 vertex with cells 6t7");
+
+
+  //// Degree 4 (55 total)
+  // all same: four choices
+  const int d4_7777 = ++vvv; vname.push_back("degree 4 vertex with cells 7777");
+  // three equal, one different: for a<b, two options, so (3+2+1) * 2 = 12 choices
+  const int d4_5557 = ++vvv; vname.push_back("degree 4 vertex with cells 5557");
+  const int d4_6667 = ++vvv; vname.push_back("degree 4 vertex with cells 6667");
+  const int d4_5777 = ++vvv; vname.push_back("degree 4 vertex with cells 5777");
+  const int d4_6777 = ++vvv; vname.push_back("degree 4 vertex with cells 6777");
+  const int d4_t777 = ++vvv; vname.push_back("degree 4 vertex with cells t777");
+  // two and two: for a<b two options, so 6 * 2 = 12 choices
+  const int d4_5566 = ++vvv; vname.push_back("degree 4 vertex with cells 5566");
+  const int d4_5656 = ++vvv; vname.push_back("degree 4 vertex with cells 5656");
+  const int d4_5t5t = ++vvv; vname.push_back("degree 4 vertex with cells 5t5t");
+  const int d4_5577 = ++vvv; vname.push_back("degree 4 vertex with cells 5577");
+  const int d4_5757 = ++vvv; vname.push_back("degree 4 vertex with cells 5757");
+  const int d4_6t6t = ++vvv; vname.push_back("degree 4 vertex with cells 6t6t");
+  const int d4_6677 = ++vvv; vname.push_back("degree 4 vertex with cells 6677");
+  const int d4_t7t7 = ++vvv; vname.push_back("degree 4 vertex with cells t7t7");
+  // all distinct: 3 choices
+  const int d4_56t7 = ++vvv; vname.push_back("degree 4 vertex with cells 56t7");
+  const int d4_567t = ++vvv; vname.push_back("degree 4 vertex with cells 567t");
+  const int d4_576t = ++vvv; vname.push_back("degree 4 vertex with cells 576t");
+  // 2,1,1: 24 in total: 4 (double symbol) * 3 (other pair) * 2
+  // Double c5:
+  const int d4_5567 = ++vvv; vname.push_back("degree 4 vertex with cells 5567");
+  const int d4_5657 = ++vvv; vname.push_back("degree 4 vertex with cells 5657");
+  const int d4_55t7 = ++vvv; vname.push_back("degree 4 vertex with cells 55t7");
+  const int d4_5t57 = ++vvv; vname.push_back("degree 4 vertex with cells 5t57");
+  // Double c6:
+  const int d4_6657 = ++vvv; vname.push_back("degree 4 vertex with cells 6657");
+  const int d4_6567 = ++vvv; vname.push_back("degree 4 vertex with cells 6567");
+  const int d4_66t7 = ++vvv; vname.push_back("degree 4 vertex with cells 66t7");
+  const int d4_6t67 = ++vvv; vname.push_back("degree 4 vertex with cells 6t67");
+  // Double t6:
+  const int d4_t5t7 = ++vvv; vname.push_back("degree 4 vertex with cells t5t7");
+  const int d4_t6t7 = ++vvv; vname.push_back("degree 4 vertex with cells t6t7");
+  // Double c7:
+  const int d4_7756 = ++vvv; vname.push_back("degree 4 vertex with cells 7756");
+  const int d4_775t = ++vvv; vname.push_back("degree 4 vertex with cells 775t");
+  const int d4_757t = ++vvv; vname.push_back("degree 4 vertex with cells 757t");
+  const int d4_776t = ++vvv; vname.push_back("degree 4 vertex with cells 776t");
+  const int d4_767t = ++vvv; vname.push_back("degree 4 vertex with cells 767t");
+
   int ccc = -1;
+
+  ++ccc;
+  cname.push_back("degree 3 vertices");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(d3_666, ccc, 1);  
+  lp.set_a(d3_777, ccc, 1);  
+  lp.set_a(d3_557, ccc, 1);  
+  lp.set_a(d3_577, ccc, 1);  
+  lp.set_a(d3_677, ccc, 1);  
+  lp.set_a(d3_t77, ccc, 1);  
+  lp.set_a(d3_567, ccc, 1);  
+  lp.set_a(d3_56t, ccc, 1);  
+  lp.set_a(d3_5t7, ccc, 1);  
+  lp.set_a(d3_6t7, ccc, 1);  
+  lp.set_a(n3, ccc, -1);  
+
+  ++ccc;
+  cname.push_back("degree 3 contributions to c5");          
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d3_557, ccc, 2);  
+  lp.set_a(d3_577, ccc, 1);  
+  lp.set_a(d3_567, ccc, 1);  
+  lp.set_a(d3_56t, ccc, 1);  
+  lp.set_a(d3_5t7, ccc, 1);  
+  lp.set_a(c5, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("degree 3 contributions to c6");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d3_666, ccc, 3);  
+  lp.set_a(d3_677, ccc, 1);  
+  lp.set_a(d3_567, ccc, 1);  
+  lp.set_a(d3_56t, ccc, 1);  
+  lp.set_a(d3_6t7, ccc, 1);  
+  lp.set_a(c6, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("degree 3 contributions to t6");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d3_t77, ccc, 1);  
+  lp.set_a(d3_56t, ccc, 1);  
+  lp.set_a(d3_5t7, ccc, 1);  
+  lp.set_a(d3_6t7, ccc, 1);  
+  lp.set_a(t6, ccc, -3);  
+
+  ++ccc;
+  cname.push_back("degree 3 contributions to c7");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d3_777, ccc, 3);  
+  lp.set_a(d3_557, ccc, 1);  
+  lp.set_a(d3_577, ccc, 2);  
+  lp.set_a(d3_677, ccc, 2);  
+  lp.set_a(d3_t77, ccc, 2);  
+  lp.set_a(d3_567, ccc, 1);  
+  lp.set_a(d3_5t7, ccc, 1);  
+  lp.set_a(d3_6t7, ccc, 1);  
+  lp.set_a(c7, ccc, -3);  
+
+
+  ++ccc;
+  cname.push_back("d4_7777 forces four e_c7 edges");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(d4_7777, ccc, 1);  
+  lp.set_a(e_c7, ccc, -4);  
+
+  ++ccc;
+  cname.push_back("d4_5777 forces two e_c7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_5777, ccc, 1);  
+  lp.set_a(e_c7, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("d4_5777 forces one e_c5c7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_5777, ccc, 1);  
+  lp.set_a(e_c5c7, ccc, -1);  
+
+  ++ccc;
+  cname.push_back("d4_t777 forces two e_c7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_t777, ccc, 1);  
+  lp.set_a(e_c7, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("d4_t777 forces two e_tc7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_t777, ccc, 1);  
+  lp.set_a(e_tc7, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("d4_6777 forces two e_c7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_6777, ccc, 1);  
+  lp.set_a(e_c7, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("d4_767t forces two e_tc7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_767t, ccc, 1);  
+  lp.set_a(e_tc7, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("d4_7756 forces one e_c7 edge");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_7756, ccc, 1);  
+  lp.set_a(e_c7, ccc, -1);  
+  ++ccc;
+  cname.push_back("d4_7756 forces one e_c5c7 edge");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_7756, ccc, 1);  
+  lp.set_a(e_c5c7, ccc, -1);  
+
+  ++ccc;
+  cname.push_back("d4_6677 forces one e_c7 edge");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_6677, ccc, 1);  
+  lp.set_a(e_c7, ccc, -1);  
+
+  ++ccc;
+  cname.push_back("d4_5757 forces two e_c5c7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_5757, ccc, 1);  
+  lp.set_a(e_c5c7, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("degree 4 vertices");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_a(d4_7777, ccc, 1);  
+  lp.set_a(d4_5557, ccc, 1);  
+  lp.set_a(d4_6667, ccc, 1);  
+  lp.set_a(d4_5777, ccc, 1);  
+  lp.set_a(d4_6777, ccc, 1);  
+  lp.set_a(d4_t777, ccc, 1);  
+  lp.set_a(d4_5566, ccc, 1);  
+  lp.set_a(d4_5656, ccc, 1);  
+  lp.set_a(d4_5t5t, ccc, 1);  
+  lp.set_a(d4_5577, ccc, 1);  
+  lp.set_a(d4_5757, ccc, 1);  
+  lp.set_a(d4_6t6t, ccc, 1);  
+  lp.set_a(d4_6677, ccc, 1);  
+  lp.set_a(d4_t7t7, ccc, 1);  
+  lp.set_a(d4_56t7, ccc, 1);  
+  lp.set_a(d4_567t, ccc, 1);  
+  lp.set_a(d4_576t, ccc, 1);  
+  lp.set_a(d4_5567, ccc, 1);  
+  lp.set_a(d4_5657, ccc, 1);  
+  lp.set_a(d4_55t7, ccc, 1);  
+  lp.set_a(d4_5t57, ccc, 1);  
+  lp.set_a(d4_6657, ccc, 1);  
+  lp.set_a(d4_6567, ccc, 1);  
+  lp.set_a(d4_66t7, ccc, 1);  
+  lp.set_a(d4_6t67, ccc, 1);  
+  lp.set_a(d4_t5t7, ccc, 1);  
+  lp.set_a(d4_t6t7, ccc, 1);  
+  lp.set_a(d4_7756, ccc, 1);  
+  lp.set_a(d4_775t, ccc, 1);  
+  lp.set_a(d4_757t, ccc, 1);  
+  lp.set_a(d4_776t, ccc, 1);  
+  lp.set_a(d4_767t, ccc, 1);  
+  lp.set_a(n4, ccc, -1);  
+
+  ++ccc;
+  cname.push_back("degree 4 contributions to c5");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_5557, ccc, 3);  
+  lp.set_a(d4_5777, ccc, 1);  
+  lp.set_a(d4_5566, ccc, 2);  
+  lp.set_a(d4_5656, ccc, 2);  
+  lp.set_a(d4_5t5t, ccc, 2);  
+  lp.set_a(d4_5577, ccc, 2);  
+  lp.set_a(d4_5757, ccc, 2);  
+  lp.set_a(d4_56t7, ccc, 1);  
+  lp.set_a(d4_567t, ccc, 1);  
+  lp.set_a(d4_576t, ccc, 1);  
+  lp.set_a(d4_5567, ccc, 2);  
+  lp.set_a(d4_5657, ccc, 2);  
+  lp.set_a(d4_55t7, ccc, 2);  
+  lp.set_a(d4_5t57, ccc, 2);  
+  lp.set_a(d4_6657, ccc, 1);  
+  lp.set_a(d4_6567, ccc, 1);  
+  lp.set_a(d4_t5t7, ccc, 1);  
+  lp.set_a(d4_7756, ccc, 1);  
+  lp.set_a(d4_775t, ccc, 1);  
+  lp.set_a(d4_757t, ccc, 1);  
+  lp.set_a(c5, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("degree 4 contributions to c6");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_6667, ccc, 3);  
+  lp.set_a(d4_6777, ccc, 1);  
+  lp.set_a(d4_5566, ccc, 2);  
+  lp.set_a(d4_5656, ccc, 2);  
+  lp.set_a(d4_6t6t, ccc, 2);  
+  lp.set_a(d4_6677, ccc, 2);  
+  lp.set_a(d4_56t7, ccc, 1);  
+  lp.set_a(d4_567t, ccc, 1);  
+  lp.set_a(d4_576t, ccc, 1);  
+  lp.set_a(d4_5567, ccc, 1);  
+  lp.set_a(d4_5657, ccc, 1);  
+  lp.set_a(d4_6657, ccc, 2);  
+  lp.set_a(d4_6567, ccc, 2);  
+  lp.set_a(d4_66t7, ccc, 2);  
+  lp.set_a(d4_6t67, ccc, 2);  
+  lp.set_a(d4_t6t7, ccc, 1);  
+  lp.set_a(d4_7756, ccc, 1);  
+  lp.set_a(d4_776t, ccc, 1);  
+  lp.set_a(d4_767t, ccc, 1);  
+  lp.set_a(c6, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("degree 4 contributions to t6");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_t777, ccc, 1);  
+  lp.set_a(d4_5t5t, ccc, 2);  
+  lp.set_a(d4_6t6t, ccc, 2);  
+  lp.set_a(d4_t7t7, ccc, 2);  
+  lp.set_a(d4_56t7, ccc, 1);  
+  lp.set_a(d4_567t, ccc, 1);  
+  lp.set_a(d4_576t, ccc, 1);  
+  lp.set_a(d4_55t7, ccc, 1);  
+  lp.set_a(d4_5t57, ccc, 1);  
+  lp.set_a(d4_66t7, ccc, 1);  
+  lp.set_a(d4_6t67, ccc, 1);  
+  lp.set_a(d4_t5t7, ccc, 2);  
+  lp.set_a(d4_t6t7, ccc, 2);  
+  lp.set_a(d4_775t, ccc, 1);  
+  lp.set_a(d4_757t, ccc, 1);  
+  lp.set_a(d4_776t, ccc, 1);  
+  lp.set_a(d4_767t, ccc, 1);  
+  lp.set_a(t6, ccc, -3);  
+
+  ++ccc;
+  cname.push_back("degree 4 contributions to c7");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_7777, ccc, 4);  
+  lp.set_a(d4_5557, ccc, 1);  
+  lp.set_a(d4_6667, ccc, 1);  
+  lp.set_a(d4_5777, ccc, 3);  
+  lp.set_a(d4_6777, ccc, 3);  
+  lp.set_a(d4_t777, ccc, 3);  
+  lp.set_a(d4_5577, ccc, 2);  
+  lp.set_a(d4_5757, ccc, 2);  
+  lp.set_a(d4_6677, ccc, 2);  
+  lp.set_a(d4_t7t7, ccc, 2);  
+  lp.set_a(d4_56t7, ccc, 1);  
+  lp.set_a(d4_567t, ccc, 1);  
+  lp.set_a(d4_576t, ccc, 1);  
+  lp.set_a(d4_5567, ccc, 1);  
+  lp.set_a(d4_5657, ccc, 1);  
+  lp.set_a(d4_55t7, ccc, 1);  
+  lp.set_a(d4_5t57, ccc, 1);  
+  lp.set_a(d4_6657, ccc, 1);  
+  lp.set_a(d4_6567, ccc, 1);  
+  lp.set_a(d4_66t7, ccc, 1);  
+  lp.set_a(d4_6t67, ccc, 1);  
+  lp.set_a(d4_t5t7, ccc, 1);  
+  lp.set_a(d4_t6t7, ccc, 1);  
+  lp.set_a(d4_7756, ccc, 2);  
+  lp.set_a(d4_775t, ccc, 2);  
+  lp.set_a(d4_757t, ccc, 2);  
+  lp.set_a(d4_776t, ccc, 2);  
+  lp.set_a(d4_767t, ccc, 2);  
+  lp.set_a(c7, ccc, -3);  
 
   // every arrow leads to two c7s
   ++ccc;
@@ -115,15 +438,15 @@ int main()
   lp.set_a(n6, ccc, 1);  
   lp.set_a(n, ccc, -1);  
 
-  // // handshake lemma
-  // ++ccc;
-  // cname.push_back("3 n3 + 4 n4 + 5 n5 + 6 n6 leq 2E");
-  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  // lp.set_a(n3, ccc, 3);  
-  // lp.set_a(n4, ccc, 4);  
-  // lp.set_a(n5, ccc, 5);  
-  // lp.set_a(n6, ccc, 6);  
-  // lp.set_a(E, ccc, -2);  
+  // handshake lemma
+  ++ccc;
+  cname.push_back("3 n3 + 4 n4 + 5 n5 + 6 n6 leq 2E");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(n3, ccc, 3);  
+  lp.set_a(n4, ccc, 4);  
+  lp.set_a(n5, ccc, 5);  
+  lp.set_a(n6, ccc, 6);  
+  lp.set_a(E, ccc, -2);  
 
 
   // removing crossings and triangulating
@@ -467,7 +790,7 @@ int main()
   //     - c7 adjacent to a single triangle (two edges)
   //     - c7 adjacent to separate triangles (one edge for each)
   ++ccc;
-  cname.push_back("e_tc7 = 2 c7_tr + c7_2tr");
+  cname.push_back("e_tc7 = 2 c7_full_tr + c7_partial_tr");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
   lp.set_a(e_tc7, ccc, 1);
   lp.set_a(c7_full_tr, ccc, -2);
@@ -489,7 +812,7 @@ int main()
   //  - e_c7 gives two (edge between two c7s)
   //  - each c7 has two edges
   ++ccc;
-  cname.push_back("2c7_tr + c7_2tr + 2 c7_arr + c7_e + 2 e_c7 = 2c7");
+  cname.push_back("2c7_full_tr + c7_partial_tr + 2 c7_arr + c7_e + 2 e_c7 = 2c7");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
   lp.set_a(c7_full_tr, ccc, 2);
   lp.set_a(c7_partial_tr, ccc, 1);
@@ -515,14 +838,12 @@ int main()
   lp.set_a(c7_arr, ccc, 1);
   lp.set_a(w_5566, ccc, -1);
 
-  // c5's on arrow cannot be adjacent to triangle
+  // c7_arr appears at most once per arrow
   ++ccc;
-  cname.push_back("e_tc5 leq c5 - 2w_5566");
+  cname.push_back("c7_full_tr leq t6");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
-  lp.set_a(e_tc5, ccc, 1);
-  lp.set_a(c5, ccc, -1);
-  lp.set_a(w_5566, ccc, 2);
-
+  lp.set_a(c7_full_tr, ccc, 1);
+  lp.set_a(t6, ccc, -1);
 
 
   // constraint #: edge density formula
@@ -585,9 +906,10 @@ int main()
 
     // variables
     std::vector<ET> val(s.variable_numerators_begin(), s.variable_numerators_end());
+    std::cout << "Number of variables: " << val.size() << "\n";
     for (std::size_t i = 0; i < val.size(); ++i) {
       std::cout << vname[i] << " = " << val[i] << "\n";
-      if (i == 4 || i == 9 || i == 13 || i == 18 || i == 26) std::cout << "\n";
+      if (i == 4 || i == 9 || i == 13 || i == 18 || i == 26 || i == 51 || i == 55 || i == 65) std::cout << "\n";
     }
 
     // tight constraints
