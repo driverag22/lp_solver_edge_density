@@ -764,16 +764,15 @@ int main()
   //   - if a c5 is adjacent to a triangle, then only 1
   //   - if a c5 is adjacent to another c5 on non-crossing edge, 
   //     then only one of the two can share crossing with another c5
-  //   - if a c5 is adjacent to a c7 on non-crossing edge, 
-  //     then the c7 crossing can only have one c5
+  //   - if a crossing contains a c7, then it can only have one c5
   // So for each edge e_{t c5}, e_{c5}, e_{c5c7}, we get crossings with at most 1 c5
   ++ccc;
-  cname.push_back("c5 leq 2X - e_{t c5} - e_{c5} - e_{c5 c7}");
+  cname.push_back("c5 leq 2X - e_{t c5} - e_{c5} - c7");
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(c5, ccc, 1);
   lp.set_a(e_tc5, ccc, 1);
   lp.set_a(e_c5, ccc, 1);
-  lp.set_a(e_c5c7, ccc, 1);
+  lp.set_a(c7, ccc, 1);
   lp.set_a(X, ccc, -2);
 
   // if we have 5566 wedge, we cannot have those c5's adjacent to triangle
