@@ -101,8 +101,7 @@ int main()
   const int d3_666 = ++vvv; vname.push_back("degree 3 vertex with cells 666");
   const int d3_777 = ++vvv; vname.push_back("degree 3 vertex with cells 777");
   // two equal, one diff: for a<b we have aab and abb, so (3+2+1)*2=12
-  const int d3_557 = ++vvv; vname.push_back("degree 3 vertex with cells 577");
-  const int d3_577 = ++vvv; vname.push_back("degree 3 vertex with cells 577");
+  const int d3_557 = ++vvv; vname.push_back("degree 3 vertex with cells 557");
   const int d3_677 = ++vvv; vname.push_back("degree 3 vertex with cells 677");
   const int d3_t77 = ++vvv; vname.push_back("degree 3 vertex with cells t77");
   // three distinct: for a<b<c we have 4
@@ -145,9 +144,6 @@ int main()
   const int d4_6567 = ++vvv; vname.push_back("degree 4 vertex with cells 6567");
   const int d4_66t7 = ++vvv; vname.push_back("degree 4 vertex with cells 66t7");
   const int d4_6t67 = ++vvv; vname.push_back("degree 4 vertex with cells 6t67");
-  // Double t6:
-  const int d4_t5t7 = ++vvv; vname.push_back("degree 4 vertex with cells t5t7");
-  const int d4_t6t7 = ++vvv; vname.push_back("degree 4 vertex with cells t6t7");
   // Double c7:
   const int d4_7756 = ++vvv; vname.push_back("degree 4 vertex with cells 7756");
   const int d4_775t = ++vvv; vname.push_back("degree 4 vertex with cells 775t");
@@ -163,7 +159,6 @@ int main()
   lp.set_a(d3_666, ccc, 1);  
   lp.set_a(d3_777, ccc, 1);  
   lp.set_a(d3_557, ccc, 1);  
-  lp.set_a(d3_577, ccc, 1);  
   lp.set_a(d3_677, ccc, 1);  
   lp.set_a(d3_t77, ccc, 1);  
   lp.set_a(d3_567, ccc, 1);  
@@ -176,7 +171,6 @@ int main()
   cname.push_back("degree 3 contributions to c5");          
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(d3_557, ccc, 2);  
-  lp.set_a(d3_577, ccc, 1);  
   lp.set_a(d3_567, ccc, 1);  
   lp.set_a(d3_56t, ccc, 1);  
   lp.set_a(d3_5t7, ccc, 1);  
@@ -206,7 +200,6 @@ int main()
   lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(d3_777, ccc, 3);  
   lp.set_a(d3_557, ccc, 1);  
-  lp.set_a(d3_577, ccc, 2);  
   lp.set_a(d3_677, ccc, 2);  
   lp.set_a(d3_t77, ccc, 2);  
   lp.set_a(d3_567, ccc, 1);  
@@ -215,9 +208,34 @@ int main()
   lp.set_a(c7, ccc, -3);  
 
 
+  // constraints regarding degree 3 vertices and non-crossing edges
+  ++ccc;
+  cname.push_back("d3_777 forces three e_tc7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d3_777, ccc, 1);  
+  lp.set_a(e_c7, ccc, -3);  
+
+  ++ccc;
+  cname.push_back("d3_557 forces two e_c5c7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d3_557, ccc, 1);  
+  lp.set_a(e_c5c7, ccc, -2);  
+
+  ++ccc;
+  cname.push_back("d3_666 forces three wedges of type in {w_5566, w_5666, w_6666, w_6667, w_6677}");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d3_666, ccc, 1);  
+  lp.set_a(w_5566, ccc, -3);  
+  lp.set_a(w_5666, ccc, -3);  
+  lp.set_a(w_6666, ccc, -3);  
+  lp.set_a(w_6667, ccc, -3);  
+  lp.set_a(w_6677, ccc, -3);  
+
+
+  // constraints regarding degree 4 vertices and non-crossing edges
   ++ccc;
   cname.push_back("d4_7777 forces four e_c7 edges");
-  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
   lp.set_a(d4_7777, ccc, 1);  
   lp.set_a(e_c7, ccc, -4);  
 
@@ -274,11 +292,24 @@ int main()
   lp.set_a(d4_6677, ccc, 1);  
   lp.set_a(e_c7, ccc, -1);  
 
-  // ++ccc;
-  // cname.push_back("d4_5757 forces two e_c5c7 edges");
-  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  // lp.set_a(d4_5757, ccc, 1);  
-  // lp.set_a(e_c5c7, ccc, -2);  
+  ++ccc;
+  cname.push_back("d4_5577 forces two e_c5c7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_5577, ccc, 1);  
+  lp.set_a(e_c5c7, ccc, -2);  
+  ++ccc;
+  cname.push_back("d4_5577 forces one e_c7 edge");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_5577, ccc, 1);  
+  lp.set_a(e_c7, ccc, -1);  
+
+  ++ccc;
+  cname.push_back("d4_t7t7 forces four e_tc7 edges");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(d4_t7t7, ccc, 1);  
+  lp.set_a(e_tc7, ccc, -4);  
+
+
 
   ++ccc;
   cname.push_back("degree 4 vertices");
@@ -308,8 +339,6 @@ int main()
   lp.set_a(d4_6567, ccc, 1);  
   lp.set_a(d4_66t7, ccc, 1);  
   lp.set_a(d4_6t67, ccc, 1);  
-  lp.set_a(d4_t5t7, ccc, 1);  
-  lp.set_a(d4_t6t7, ccc, 1);  
   lp.set_a(d4_7756, ccc, 1);  
   lp.set_a(d4_775t, ccc, 1);  
   lp.set_a(d4_757t, ccc, 1);  
@@ -336,7 +365,6 @@ int main()
   lp.set_a(d4_5t57, ccc, 2);  
   lp.set_a(d4_6657, ccc, 1);  
   lp.set_a(d4_6567, ccc, 1);  
-  lp.set_a(d4_t5t7, ccc, 1);  
   lp.set_a(d4_7756, ccc, 1);  
   lp.set_a(d4_775t, ccc, 1);  
   lp.set_a(d4_757t, ccc, 1);  
@@ -360,7 +388,6 @@ int main()
   lp.set_a(d4_6567, ccc, 2);  
   lp.set_a(d4_66t7, ccc, 2);  
   lp.set_a(d4_6t67, ccc, 2);  
-  lp.set_a(d4_t6t7, ccc, 1);  
   lp.set_a(d4_7756, ccc, 1);  
   lp.set_a(d4_776t, ccc, 1);  
   lp.set_a(d4_767t, ccc, 1);  
@@ -380,8 +407,6 @@ int main()
   lp.set_a(d4_5t57, ccc, 1);  
   lp.set_a(d4_66t7, ccc, 1);  
   lp.set_a(d4_6t67, ccc, 1);  
-  lp.set_a(d4_t5t7, ccc, 2);  
-  lp.set_a(d4_t6t7, ccc, 2);  
   lp.set_a(d4_775t, ccc, 1);  
   lp.set_a(d4_757t, ccc, 1);  
   lp.set_a(d4_776t, ccc, 1);  
@@ -412,21 +437,12 @@ int main()
   lp.set_a(d4_6567, ccc, 1);  
   lp.set_a(d4_66t7, ccc, 1);  
   lp.set_a(d4_6t67, ccc, 1);  
-  lp.set_a(d4_t5t7, ccc, 1);  
-  lp.set_a(d4_t6t7, ccc, 1);  
   lp.set_a(d4_7756, ccc, 2);  
   lp.set_a(d4_775t, ccc, 2);  
   lp.set_a(d4_757t, ccc, 2);  
   lp.set_a(d4_776t, ccc, 2);  
   lp.set_a(d4_767t, ccc, 2);  
   lp.set_a(c7, ccc, -3);  
-
-  // every arrow leads to two c7s
-  ++ccc;
-  cname.push_back("w5566 leq c7");
-  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
-  lp.set_a(w_5566, ccc, 1);  
-  lp.set_a(c7, ccc, -1);  
 
   // vertices
   ++ccc;
@@ -464,6 +480,13 @@ int main()
   lp.set_a(w_6777, ccc, 9);   
   lp.set_a(w_7777, ccc, 10);   
   lp.set_a(n, ccc, -6);  
+
+  // every arrow leads to two c7s
+  ++ccc;
+  cname.push_back("w5566 leq c7");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc, 0);
+  lp.set_a(w_5566, ccc, 1);  
+  lp.set_a(c7, ccc, -1);  
 
   // one c6-type per c6 cell
   ++ccc;
@@ -785,78 +808,78 @@ int main()
   lp.set_a(e_c5, ccc, 1);
   lp.set_a(c5, ccc, -1);
 
-  // // constraint #: divide t-c7 edges into two cases:
-  // //     - c7 adjacent to a single triangle (two edges)
-  // //     - c7 adjacent to separate triangles (one edge for each)
-  // ++ccc;
-  // cname.push_back("e_tc7 = 2 c7_full_tr + c7_partial_tr");
-  // lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
-  // lp.set_a(e_tc7, ccc, 1);
-  // lp.set_a(c7_full_tr, ccc, -2);
-  // lp.set_a(c7_partial_tr, ccc, -1);
-  // // constraint #: divide c5-c7 edges into two cases:
-  // //     - c7 adjacent to a single arrow (two edges)
-  // //     - any other c5-c7 edge (one edge)
-  // ++ccc;
-  // cname.push_back("e_c5c7 = 2c7_arr + c7c5_e");
-  // lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
-  // lp.set_a(e_c5c7, ccc, 1);
-  // lp.set_a(c7_arr, ccc, -2);
-  // lp.set_a(c7c5_e, ccc, -1);
+  // constraint #: divide t-c7 edges into two cases:
+  //     - c7 adjacent to a single triangle (two edges)
+  //     - c7 adjacent to separate triangles (one edge for each)
+  ++ccc;
+  cname.push_back("e_tc7 = 2 c7_full_tr + c7_partial_tr");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
+  lp.set_a(e_tc7, ccc, 1);
+  lp.set_a(c7_full_tr, ccc, -2);
+  lp.set_a(c7_partial_tr, ccc, -1);
+  // constraint #: divide c5-c7 edges into two cases:
+  //     - c7 adjacent to a single arrow (two edges)
+  //     - any other c5-c7 edge (one edge)
+  ++ccc;
+  cname.push_back("e_c5c7 = 2c7_arr + c7c5_e");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
+  lp.set_a(e_c5c7, ccc, 1);
+  lp.set_a(c7_arr, ccc, -2);
+  lp.set_a(c7c5_e, ccc, -1);
 
-  // //  - c7_full_tr gives two c7-adjacent edges
-  // //  - c7_partial_tr gives one
-  // //  - c7_arr gives two 
-  // //  - c7c5_e gives one
-  // //  - e_c7 gives two (edge between two c7s)
-  // //  - each c7 has two edges
-  // ++ccc;
-  // cname.push_back("2c7_full_tr + c7_partial_tr + 2 c7_arr + c7c5_e + 2 e_c7 = 2c7");
-  // lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
-  // lp.set_a(c7_full_tr, ccc, 2);
-  // lp.set_a(c7_partial_tr, ccc, 1);
-  // lp.set_a(c7_arr, ccc, 2);
-  // lp.set_a(c7c5_e, ccc, 1);
-  // lp.set_a(e_c7, ccc, 2);
-  // lp.set_a(c7, ccc, -2);
+  //  - c7_full_tr gives two c7-adjacent edges
+  //  - c7_partial_tr gives one
+  //  - c7_arr gives two 
+  //  - c7c5_e gives one
+  //  - e_c7 gives two (edge between two c7s)
+  //  - each c7 has two edges
+  ++ccc;
+  cname.push_back("2c7_full_tr + c7_partial_tr + 2 c7_arr + c7c5_e + 2 e_c7 = 2c7");
+  lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc,0);
+  lp.set_a(c7_full_tr, ccc, 2);
+  lp.set_a(c7_partial_tr, ccc, 1);
+  lp.set_a(c7_arr, ccc, 2);
+  lp.set_a(c7c5_e, ccc, 1);
+  lp.set_a(e_c7, ccc, 2);
+  lp.set_a(c7, ccc, -2);
 
-  // // c7 adjacent to single triangle cannot be on 5676 wedge
-  // // c7 adjacent to single arrow cannot be on 5676 wedge
-  // ++ccc;
-  // cname.push_back("w_5676 leq c7 - c7_full_tr - c7_arr");
-  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
-  // lp.set_a(w_5676, ccc, 1);
-  // lp.set_a(c7_full_tr, ccc, 1);
-  // lp.set_a(c7_arr, ccc, 1);
-  // lp.set_a(c7, ccc, -1);
+  // c7 adjacent to single triangle cannot be on 5676 wedge
+  // c7 adjacent to single arrow cannot be on 5676 wedge
+  ++ccc;
+  cname.push_back("w_5676 leq c7 - c7_full_tr - c7_arr");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
+  lp.set_a(w_5676, ccc, 1);
+  lp.set_a(c7_full_tr, ccc, 1);
+  lp.set_a(c7_arr, ccc, 1);
+  lp.set_a(c7, ccc, -1);
 
-  // // c7_arr appears at most once per arrow
-  // ++ccc;
-  // cname.push_back("c7_arr leq w5566");
-  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
-  // lp.set_a(c7_arr, ccc, 1);
-  // lp.set_a(w_5566, ccc, -1);
+  // c7_arr appears at most once per arrow
+  ++ccc;
+  cname.push_back("c7_arr leq w5566");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
+  lp.set_a(c7_arr, ccc, 1);
+  lp.set_a(w_5566, ccc, -1);
 
-  // // c7c5_e appears at most once per arrow
-  // ++ccc;
-  // cname.push_back("c7c5_e leq w5566");
-  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
-  // lp.set_a(c7_arr, ccc, 1);
-  // lp.set_a(w_5566, ccc, -1);
+  // c7c5_e appears at most once per arrow
+  ++ccc;
+  cname.push_back("c7c5_e leq w5566");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
+  lp.set_a(c7_arr, ccc, 1);
+  lp.set_a(w_5566, ccc, -1);
 
-  // // c7_arr appears at most once per triangle
-  // ++ccc;
-  // cname.push_back("c7_full_tr leq t6");
-  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
-  // lp.set_a(c7_full_tr, ccc, 1);
-  // lp.set_a(t6, ccc, -1);
+  // c7_arr appears at most once per triangle
+  ++ccc;
+  cname.push_back("c7_full_tr leq t6");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
+  lp.set_a(c7_full_tr, ccc, 1);
+  lp.set_a(t6, ccc, -1);
 
-  // // c7_arr appears at most once per triangle
-  // ++ccc;
-  // cname.push_back("c7_full_tr leq t6");
-  // lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
-  // lp.set_a(c7_full_tr, ccc, 1);
-  // lp.set_a(t6, ccc, -1);
+  // c7_arr appears at most once per triangle
+  ++ccc;
+  cname.push_back("c7_full_tr leq t6");
+  lp.set_r(ccc, CGAL::SMALLER); lp.set_b(ccc,0);
+  lp.set_a(c7_full_tr, ccc, 1);
+  lp.set_a(t6, ccc, -1);
 
 
   // constraint #: edge density formula
