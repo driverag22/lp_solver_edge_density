@@ -81,6 +81,11 @@ int main()
   lp.set_a(n, ccc, 3);  
   lp.set_a(E, ccc, -2);  
 
+  // ++ccc;
+  // cname.push_back("w_55xx = 0");
+  // lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
+  // lp.set_a(w_55xx, ccc, 1);
+
   ++ccc;
   cname.push_back("w_55xx + ... leq X");
   lp.set_r(ccc, CGAL::EQUAL); lp.set_b(ccc, 0);
