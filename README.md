@@ -9,7 +9,8 @@ Uses CGAL's lp-solver library to encode constraints that this class of graphs ar
 ```
 .
 ├── src/
-│   ├── mainMin.cpp
+│   ├── mainMin_simple.cpp
+│   ├── mainMin_extended.cpp
 │   ├── main.cpp
 │   ├── main_no8.cpp
 │   └── c4_finder.cpp
@@ -17,10 +18,10 @@ Uses CGAL's lp-solver library to encode constraints that this class of graphs ar
 └── CMakeLists.txt
 ```
 
- - `mainMin.cpp` contains the code for the simplified case in which we assume there are no cells larger than size 7.
- - `main.cpp` contains the code for the general problem.
- - `main_n08.cpp` contains the code for the problem where we combine cells of size 8 and 9 into one.
- - `c4_finder.cpp` is just some helper code to find 4-cycles in graphs.
-
- - `compile.sh` simply compiles the code using a simple bash script. The code can be compiled like any other CGAL-based cpp program otherwise.
- - `CMakeLists.txt` is required for CGAL. It controls which cpp file is compiled.
+ * `mainMin_simple.cpp` contains the code for the simplified case in which we assume there are no cells larger than size 7.
+ * `mainMin_extended.cpp` contains the code of `mainMin_simple.cpp` plus some extra constraints regarding the types of degree 3 and degree 4 vertices.
+ * `main.cpp` contains the code for the general problem.
+ * `main_n08.cpp` contains the code for the problem where we combine cells of size 8 and 9 into one.
+ * `c4_finder.cpp` is just some helper code to find 4-cycles in graphs.
+ * `compile.sh` simply compiles the code using a simple bash script. The code can be compiled like any other CGAL-based cpp program otherwise.
+ * `CMakeLists.txt` is required for CGAL. It controls which cpp file is compiled.
